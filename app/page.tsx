@@ -14,7 +14,8 @@ import ProductListing from "@/components/ProductListing";
 import { scaleProduct } from "@/data/dummy";
 
 export const revalidate = 60;
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
+
 
 // ------------------ SEO METADATA ------------------
 export const metadata = {
