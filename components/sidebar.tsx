@@ -2,29 +2,13 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
-  LogOut,
 } from "lucide-react";
-import { useSession, signOut } from "next-auth/react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import SignInButton from "@/components/auth/SignInButton";
-import { SiYoutubestudio } from "react-icons/si";
-import Image from "next/image";
-import { IconDotsVertical } from "@tabler/icons-react";
-
 interface SidebarProps {
   scrolled: boolean;
   navItems: { href: string; label: string }[];
@@ -38,12 +22,8 @@ export default function Sidebar({
   navItems,
   mobileOpen,
   setMobileOpen,
-  handleMediaClick,
 }: SidebarProps) {
-  const router = useRouter();
   const pathname = usePathname();
-  const { data: session } = useSession();
-  const user = session?.user;
 
   // Disable scroll when sidebar is open
   useEffect(() => {
