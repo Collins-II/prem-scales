@@ -81,7 +81,7 @@ export default function ProductListing({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4 }}
-              className="relative h-40 sm:h-48 lg:h-full overflow-hidden border"
+              className="relative h-40 sm:h-48 lg:h-full overflow-hidden border border-neutral-200"
             >
               <Image
                 src={bannerImage}
@@ -111,7 +111,7 @@ export default function ProductListing({
 
         {/* Product List */}
         <div className="lg:col-span-3 space-y-4">
-          <div className="border rounded-xl divide-y">
+          <div className="border border-neutral-200 rounded-xl divide-y">
             {loading
               ? Array.from({ length: 4 }).map((_, i) => (
                   <ProductSkeleton key={i} />
@@ -126,7 +126,7 @@ export default function ProductListing({
                     className="group flex gap-4 p-4 hover:bg-gray-50 transition"
                   >
                     {product.image && (
-                      <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden border">
+                      <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden border border-neutral-200">
                         <Image
                           src={product.image}
                           alt={product.name}

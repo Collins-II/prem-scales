@@ -20,7 +20,7 @@ const fadeUp = {
 
 export default function Footer() {
   return (
-    <footer className="bg-white text-neutral-700 border-t">
+    <footer className="bg-white text-neutral-700 border-t border-neutral-200">
       {/* Main Grid */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
         
@@ -168,7 +168,7 @@ export default function Footer() {
       </div>*/}
 
       {/* Bottom Bar */}
-      <Separator />
+      <Separator className="bg-neutral-200"/>
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-6 flex flex-col md:flex-row items-center justify-between text-xs text-neutral-500">
         <p>© {new Date().getFullYear()} Premier Scales Zambia</p>
         <div className="flex gap-6">

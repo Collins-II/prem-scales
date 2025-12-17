@@ -107,7 +107,7 @@ export default function TopNews() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="relative h-26 sm:h-34 lg:h-full overflow-hidden border"
+              className="relative h-26 sm:h-34 lg:h-full overflow-hidden border border-neutral-200"
             >
               <Image
                 src="/products/retail-s1.png"
@@ -125,7 +125,7 @@ export default function TopNews() {
 
         {/* News List */}
         <div className="lg:col-span-3 space-y-2 ">
-          <div className="border rounded-xl divide-y">
+          <div className="border border-neutral-200 rounded-xl divide-y">
             {loading
               ? Array.from({ length: 3 }).map((_, i) => <NewsItemSkeleton key={i} />)
               : news.map((item, index) => (
