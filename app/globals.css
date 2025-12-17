@@ -94,7 +94,7 @@
 
 .dark {
   /* Dark Mode (black-centric) */
-  --background: #0b0b0b;
+  --background: #fff;
   --foreground: #f9f9f9;
 
   --card: #161616;
@@ -202,7 +202,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-white text-foreground font-sans;
     background-image: radial-gradient(
         circle at top left,
         rgba(37, 99, 235, 0.05),
@@ -229,6 +229,6 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-white text-foreground;
   }
 }

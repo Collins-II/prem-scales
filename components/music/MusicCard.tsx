@@ -38,13 +38,12 @@ export function MusicCard({
       <Link href={href}>
         <div className="
           overflow-hidden 
-          bg-white dark:bg-neutral-900 
+          bg-neutral-200 
           transition 
           relative 
           group 
           rounded-none 
           hover:shadow-2xl 
-          dark:hover:shadow-neutral-800 
           duration-300
         ">
           {/* Cover Image */}
@@ -52,7 +51,7 @@ export function MusicCard({
             {loading && (
               <div className="absolute inset-0 animate-pulse bg-gradient-to-r 
                 from-gray-300 via-gray-200 to-gray-300 
-                dark:from-neutral-700 dark:via-neutral-800 dark:to-neutral-700" 
+                " 
               />
             )}
 

@@ -28,8 +28,7 @@ export function VideoCard({
       className="
         relative w-full
         overflow-hidden cursor-pointer
-        bg-white dark:bg-neutral-900
-        text-neutral-900 dark:text-neutral-100
+        bg-neutral-200
       "
     >
       <Link
@@ -44,7 +43,7 @@ export function VideoCard({
             <div className="
               absolute inset-0 animate-pulse 
               bg-gradient-to-r from-neutral-300 via-neutral-200 to-neutral-300 
-              dark:from-neutral-700 dark:via-neutral-600 dark:to-neutral-700
+              
             " />
           )}
 
