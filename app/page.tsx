@@ -2,13 +2,11 @@
 import React, { Suspense } from "react";
 import HeroSection from "@/components/hero";
 import Footer from "@/components/footer";
-import NetworkError from "@/components/NetworkError";
 import RealtimeContent from "@/components/realtime/realtime-content";
 import Script from "next/script";
 
 import { getSongs } from "@/actions/getSongs";
 import { getVideos } from "@/actions/getVideos";
-import Image from "next/image";
 import RealtimeNotifications from "@/components/realtime/realtime-notification";
 import ProductListing from "@/components/ProductListing";
 import { scaleProduct } from "@/data/dummy";
@@ -56,28 +54,25 @@ export const metadata = {
 // ------------------ LOAD INITIAL CONTENT ------------------
 async function loadContent() {
   try {
-    const [songs, videos] = await Promise.all([getSongs(), getVideos()]);
-    if (!songs?.length || !videos?.length) {
-      return { error: true, songs: [], videos: [] };
-    }
-    return { error: false, songs, videos };
+    const [songs, videos] = await Promise.allSettled([
+      getSongs(),
+      getVideos(),
+    ]);
+
+    return {
+      songs: songs.status === "fulfilled" ? songs.value ?? [] : [],
+      videos: videos.status === "fulfilled" ? videos.value ?? [] : [],
+    };
   } catch (e) {
     console.error("Failed to load content:", e);
-    return { error: true, songs: [], videos: [] };
+    return { songs: [], videos: [] };
   }
 }
 
+
 // ------------------ PAGE ------------------
 export default async function Home() {
-  const { error, songs, videos } = await loadContent();
-
-  if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-black text-white">
-        <NetworkError message="Failed to load content. Please try again later." />
-      </div>
-    );
-  }
+  const { songs, videos } = await loadContent();
 
   return (
     <>
@@ -112,15 +107,6 @@ export default async function Home() {
         `}
       </Script>
 
-      <noscript>
-        <Image
-          height="1"
-          width="1"
-          alt="script-img"
-          style={{ display: "none" }}
-          src="https://www.facebook.com/tr?id=META_PIXEL_ID&ev=PageView&noscript=1"
-        />
-      </noscript>
 
       {/* ---- PAGE UI ---- */}
       <div className="min-h-screen w-full overflow-x-hidden bg-white">
