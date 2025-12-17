@@ -10,20 +10,9 @@ import Client from "@/components/realtime/Client";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-async function loadContent() {
-  const [songs, videos] = await Promise.allSettled([
-    getSongs(),
-    getVideos(),
-  ]);
-
-  return {
-    songs: songs.status === "fulfilled" ? songs.value ?? [] : [],
-    videos: videos.status === "fulfilled" ? videos.value ?? [] : [],
-  };
-}
-
 export default async function Home() {
-  const { songs, videos } = await loadContent();
+  const songs = await getSongs();
+  const videos = await getVideos();
 
   return (
     <>
