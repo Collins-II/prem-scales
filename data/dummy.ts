@@ -80,3 +80,18 @@ export const scaleProduct = [
     ],
   },
 ];
+
+
+export const BANNERS = [
+  "/products/retail-s4.png",
+  "/products/retail-s3.png",
+  "/products/retail-s1.png",
+  "/products/lab-s1.png",
+]
+
+export const NEW_RELEASE = [
+  "/products/retail-s2.png",
+  "/products/retail-s5.png",
+  "/products/retail-s1.png",
+  "/products/lab-s1.png",
+]

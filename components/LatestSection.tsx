@@ -4,20 +4,16 @@ import { MusicCard } from "./music/MusicCard";
 import { VideoCard } from "./video/VideoCard";
 import HorizontalSlider from "./sliders/HorizontalSlider";
 //import GoogleAd from "./ads/AdSlot";
-import { ChartItem } from "@/actions/getCharts";
+
 import MusicCardSkeleton from "./skeletons/music-card-skeleton";
 import VideoCardSkeleton from "./skeletons/video-card-skeleton";
 import TopNews from "./TopNews";
+import { BANNERS, NEW_RELEASE } from "@/data/dummy";
 
-interface SectionProps {
-  songs?: ChartItem[];
-  videos?: ChartItem[];
-  loading?: boolean;
-}
 
-export default function LatestSection({ songs, videos, loading }: SectionProps) {
+export default function LatestSection() {
 
-  const isLoading = loading || (!songs?.length && !videos?.length);
+  const isLoading = (!BANNERS?.length && !NEW_RELEASE?.length);
 
   return (
     <section className="py-16 bg-background">
@@ -28,18 +24,11 @@ export default function LatestSection({ songs, videos, loading }: SectionProps) 
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 pb-4 scrollbar-hide">
                 {isLoading
                   ? Array.from({ length: 6 }).map((_, i) => <MusicCardSkeleton key={i} />)
-                  : songs?.slice(0,4)?.map((track, idx) => (
+                  : BANNERS?.slice(0,4)?.map((track, idx) => (
                       <MusicCard
                         key={idx}
-                        id={track.id}
-                        title={track.title}
-                        artist={track.artist as string}
-                        href={`/music/song/${track.id}`}
-                        cover="/products/retail-s4.png"
-                        downloads={track.stats.downloads}
-                        views={track.stats.totalViews}
-                        genre={track.genre as string}
-                        publishedAt={track.releaseDate as string}
+                        href={`/Products`}
+                        cover={track}
                       />
                     ))}
               </div>
@@ -50,22 +39,16 @@ export default function LatestSection({ songs, videos, loading }: SectionProps) 
 
             {/* Top Videos */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
-            {videos && (
+            {NEW_RELEASE && (
             <div>
-              <HorizontalSlider title="New Release">
+              <HorizontalSlider gap="md" title="New Release">
                 {isLoading
                   ? Array.from({ length: 5 }).map((_, i) => <VideoCardSkeleton key={i} />)
-                  : videos?.map((video) => (
+                  : NEW_RELEASE?.map((video, idx) => (
                       <VideoCard
-                        key={video.id}
-                        id={video.id}
-                        title={video.title}
-                        artist={video.artist as string}
-                        cover="/products/lab-s1.png"
-                        downloads={video.stats.downloads}
-                        category={video.genre}
-                        views={video.stats.totalViews}
-                        videoUrl={video.videoUrl as string}
+                        key={idx}
+                        cover={video}
+                        href="/Products"
                       />
                     ))}
               </HorizontalSlider>

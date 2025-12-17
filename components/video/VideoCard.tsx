@@ -6,20 +6,12 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 interface VideoCardProps {
-  id: string;
-  title: string;
-  artist: string;
   cover: string;
-  downloads: number;
-  category?: string;
-  views?: number;
-  videoUrl: string;
-  snippetLength?: number;
+  href: string;
 }
 
 export function VideoCard({
-  title,
-  artist,
+  href,
   cover,
 }: VideoCardProps) {
   const [imgLoaded, setImgLoaded] = useState(false);
@@ -34,19 +26,19 @@ export function VideoCard({
       whileHover={!isTouchDevice ? { scale: 1.02 } : undefined}
       transition={{ type: "spring", stiffness: 220, damping: 16 }}
       className="
-        relative w-full  
+        relative w-full
         overflow-hidden cursor-pointer
         bg-white dark:bg-neutral-900
         text-neutral-900 dark:text-neutral-100
       "
     >
       <Link
-        href={`/Products`}
+        href={href}
         prefetch={false}
-        aria-label={`Watch ${title} by ${artist}`}
+        aria-label={`PRODUCT_ITEM`}
         className="block w-full"
       >
-        <div className="relative w-full h-52 overflow-hidden">
+        <div className="relative w-full h-100 overflow-hidden">
 
           {!imgLoaded && (
             <div className="
@@ -58,7 +50,7 @@ export function VideoCard({
 
           <Image
             src={cover || "/assets/images/placeholder_cover.jpg"}
-            alt={title}
+            alt="PRODUCT_ITEM"
             fill
             loading="lazy"
             className={`

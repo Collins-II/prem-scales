@@ -122,7 +122,7 @@ export default function HorizontalSlider({
             <motion.div
               key={index}
               className="flex-shrink-0 snap-center
-              min-w-[75%] sm:min-w-[45%]"
+              min-w-[75%] sm:min-w-[55%]"
               whileHover={{ y: -4 }}
               transition={{
                 type: "spring",

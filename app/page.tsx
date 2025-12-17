@@ -3,7 +3,7 @@ import HeroSection from "@/components/hero";
 import Footer from "@/components/footer";
 import ProductListing from "@/components/ProductListing";
 import { scaleProduct } from "@/data/dummy";
-import RealtimeContent from "@/components/realtime/realtime-content";
+import LatestSection from "@/components/LatestSection";
 
 export default async function Home() {
 
@@ -14,7 +14,7 @@ export default async function Home() {
         <HeroSection />
 
         <Suspense fallback={<div className="p-10 text-center">Loading content…</div>}>
-          <RealtimeContent />
+          <LatestSection />
         </Suspense>
 
         {scaleProduct.map((category, i) => (

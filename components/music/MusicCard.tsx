@@ -6,17 +6,8 @@ import Link from "next/link";
 import { useState } from "react";
 
 interface MusicCardProps {
-  id: string;
-  title: string;
-  artist: string;
   href: string;
   cover: string;
-  downloads: number;
-  views: number;
-  genre: string;
-  publishedAt: string;
-  isTrending?: boolean;
-  chartRank?: number;
 }
 
 const customImageLoader = ({ src, width, quality }: ImageLoaderProps) => {
@@ -32,8 +23,7 @@ const customImageLoader = ({ src, width, quality }: ImageLoaderProps) => {
 };
 
 export function MusicCard({
-  id,
-  title,
+  href,
   cover,
 }: MusicCardProps) {
   const [loading, setLoading] = useState(true);
@@ -41,12 +31,11 @@ export function MusicCard({
 
   return (
     <motion.div
-      key={id}
       initial={{ y: 30, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <Link href="/Products">
+      <Link href={href}>
         <div className="
           overflow-hidden 
           bg-white dark:bg-neutral-900 
@@ -69,7 +58,7 @@ export function MusicCard({
 
             <Image
               src={!imgError && cover ? cover : "/assets/images/placeholder_cover.jpg"}
-              alt={title}
+              alt="PRODUCT_ITEM"
               loader={customImageLoader}
               fill
               className="
