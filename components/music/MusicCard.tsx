@@ -14,7 +14,7 @@ const customImageLoader = ({ src, width, quality }: ImageLoaderProps) => {
   try {
     const url = new URL(src);
     if (url.hostname.includes("res.cloudinary.com")) {
-      return `${src}?w=${width}&q=${quality || 80}&f=auto`;
+      return `${src}?w=${width || 60 }&q=${quality || 80}&f=auto`;
     }
     return src;
   } catch {

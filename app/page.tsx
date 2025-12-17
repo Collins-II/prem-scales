@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import HeroSection from "@/components/hero";
 import Footer from "@/components/footer";
 import ProductListing from "@/components/ProductListing";
@@ -13,9 +13,7 @@ export default async function Home() {
       <div className="min-h-screen bg-white">
         <HeroSection />
 
-        <Suspense fallback={<div className="p-10 text-center">Loading content…</div>}>
-          <LatestSection />
-        </Suspense>
+        <LatestSection />
 
         {scaleProduct.map((category, i) => (
           <ProductListing key={i} {...category} />
