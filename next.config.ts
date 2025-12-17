@@ -31,7 +31,7 @@ const nextConfig = {
       "i.scdn.co",
     ],
   },
-
+  turbopack: {},
 };
 
 export default withPWA(nextConfig);

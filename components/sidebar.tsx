@@ -82,35 +82,35 @@ export default function Sidebar({
             animate="visible"
             exit="exit"
             transition={{ type: "tween", duration: 0.3 }}
-            className={`fixed top-0 right-0 w-72 h-screen/95 rounded-bl-xl z-[60] flex flex-col shadow-lg transition-colors duration-300
+            className={`fixed top-0 right-0 w-72 h-screen rounded-bl-xl z-[60] flex flex-col shadow-lg transition-colors duration-300
               ${scrolled ? "bg-white text-gray-900" : "bg-neutral-950 text-white"}`}
             role="dialog"
             aria-modal="true"
           >
             {/* HEADER */}
-            <div className="flex justify-between items-center px-6 py-4 border-b border-gray-700/20">
-              <Link
+            <div className="flex justify-end items-center px-6 py-4 bg-red-600 border-b border-gray-700/20">
+              {/*<Link
                 href="/"
                 onClick={() => setMobileOpen(false)}
                 className="flex items-center gap-2"
               >
                 <span
                   className={`italic text-2xl font-extrabold transition-colors ${
-                    scrolled ? "text-blue-600" : "text-white"
+                    scrolled ? "text-red-600" : "text-white"
                   }`}
                 >
                   <Image src="/assets/logo/logo-bl.jpg" alt="LOUDEAR-LOGO" width={50} height={50} className="rounded-full object-cover" />
                 </span>
-              </Link>
+              </Link>*/}
 
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setMobileOpen(false)}
                 aria-label="Close sidebar"
-                className="rounded-full"
+                className="rounded-full bg-white text-black hover:bg-white/10"
               >
-                <X className="w-6 h-6" />
+                <X className="w-12 h-12" />
               </Button>
             </div>
 
@@ -126,9 +126,9 @@ export default function Sidebar({
                     className={`block text-base font-semibold rounded-md px-2 py-1 transition-colors
                       ${
                         active
-                          ? "text-blue-500"
+                          ? "text-red-500"
                           : scrolled
-                          ? "text-gray-800 hover:text-blue-600"
+                          ? "text-gray-800 hover:text-red-600"
                           : "text-gray-300 hover:text-white"
                       }`}
                   >
@@ -140,11 +140,11 @@ export default function Sidebar({
 
             <Separator className="opacity-20" />
 
-            {/* FOOTER */}
+            {/* FOOTER 
             <footer className="p-6 border-t border-gray-700/30 space-y-4">
               {session ? (
                 <>
-                  {/* Upload Media Dropdown */}
+                  
                       <Button
                         className={`w-full justify-center uppercase rounded-full gap-2 font-semibold cursor-pointer ${
                           scrolled
@@ -158,9 +158,7 @@ export default function Sidebar({
                       >
                          Studio <SiYoutubestudio />
                       </Button>
-                   
 
-{/* 🔹 User Info Dropdown */}
 <DropdownMenu>
   <DropdownMenuTrigger asChild>
     <button
@@ -212,10 +210,10 @@ export default function Sidebar({
 
     <DropdownMenuSeparator />
 
-    {/* Example of future user settings if needed */}
+
     {/* <DropdownMenuItem onClick={() => router.push("/account")} className="gap-2">
       <UserCircle2 className="w-4 h-4" /> Account Settings
-    </DropdownMenuItem> */}
+    </DropdownMenuItem> 
 
     <DropdownMenuItem
       onClick={() => signOut()}
@@ -245,7 +243,7 @@ export default function Sidebar({
                   </div>
                 </>
               )}
-            </footer>
+            </footer> */}
           </motion.aside>
         </>
       )}
