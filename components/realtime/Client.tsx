@@ -12,15 +12,10 @@ const RealtimeNotifications = dynamic(
   { ssr: false }
 );
 
-type Props = {
-  songs: any[];
-  videos: any[];
-};
-
-export default function Client({ songs, videos }: Props) {
+export default function Client() {
   return (
     <>
-      <RealtimeContent initialSongs={songs} initialVideos={videos} />
+      <RealtimeContent  />
       <RealtimeNotifications />
     </>
   );
