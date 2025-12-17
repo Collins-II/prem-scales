@@ -56,7 +56,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="w-full bg-background pt-14">
+    <section className="w-full bg-white pt-14">
       <div className="relative h-[30vh] sm:h-[70vh] overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div

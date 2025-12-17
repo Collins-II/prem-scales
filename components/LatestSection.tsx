@@ -16,7 +16,7 @@ export default function LatestSection() {
   const isLoading = (!BANNERS?.length && !NEW_RELEASE?.length);
 
   return (
-    <section className="py-16 bg-background">
+    <section className="py-16 bg-white">
       <div className="max-w-5xl px-6 mx-auto space-y-8">
             {/* Trending Music */}
             <div className="md:px-0">
