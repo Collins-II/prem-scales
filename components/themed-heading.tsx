@@ -30,7 +30,7 @@ export default function ThemedHeading({
       )}
       
       <div className="flex justify-between items-center ">
-      <h2 className="text-lg md:text-1xl font-light tracking-tight text-neutral-900 dark:text-neutral-100">
+      <h2 className="text-lg md:text-1xl font-light tracking-tight text-neutral-800">
         {title}
       </h2>
       {link && (
