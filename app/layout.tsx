@@ -35,14 +35,14 @@ export const metadata: Metadata = {
 
   icons: {
     icon: [
-      { url: "/assets/logo/logo-blu.jpg", type: "image/jpg", sizes: "32x32" },
-      { url: "/assets/logo/logo-blu.jpg", type: "image/jpg", sizes: "16x16" },
+      { url: "/assets/logo/zm_logo.jpeg", type: "image/jpeg", sizes: "32x32" },
+      { url: "/assets/logo/zm_logo.jpeg", type: "image/jpeg", sizes: "16x16" },
     ],
-    apple: { url: "/assets/logo/logo-blu.jpg", sizes: "180x180" },
+    apple: { url: "/assets/logo/zm_logo.jpeg", sizes: "180x180" },
     other: [
       {
         rel: "mask-icon",
-        url: "/assets/logo/logo-blu.jpg",
+        url: "/assets/logo/zm_logo.jpeg",
         color: "#161616",
       },
       {
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     siteName: "ScalesPrem",
     images: [
       {
-        url: `${BASE_URL}/assets/logo/logo-blu.jpg`,
+        url: `${BASE_URL}/assets/logo/zm_logo.jpeg`,
         width: 1200,
         height: 630,
         alt: "ScalesPrem Preview",
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     title: "Premier Scales Zambia",
     description:
       "Accurately Measuring Zambia.",
-    images: [`${BASE_URL}/assets/logo/logo-blu.jpg`],
+    images: [`${BASE_URL}/assets/logo/zm_logo.jpeg`],
   },
 };
 

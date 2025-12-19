@@ -8,7 +8,7 @@ import HorizontalSlider from "./sliders/HorizontalSlider";
 import MusicCardSkeleton from "./skeletons/music-card-skeleton";
 import VideoCardSkeleton from "./skeletons/video-card-skeleton";
 import TopNews from "./TopNews";
-import { BANNERS, NEW_RELEASE } from "@/data/dummy";
+import { BANNERS, NEW_RELEASE, PRODUCTS } from "@/data/dummy";
 
 
 export default function LatestSection() {
@@ -24,7 +24,7 @@ export default function LatestSection() {
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 pb-4 scrollbar-hide">
                 {isLoading
                   ? Array.from({ length: 6 }).map((_, i) => <MusicCardSkeleton key={i} />)
-                  : BANNERS?.slice(0,4)?.map((track, idx) => (
+                  : PRODUCTS?.slice(0,4)?.map((track, idx) => (
                       <MusicCard
                         key={idx}
                         href={`/Products`}
@@ -39,12 +39,12 @@ export default function LatestSection() {
 
             {/* Top Videos */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
-            {NEW_RELEASE && (
+            {PRODUCTS && (
             <div>
               <HorizontalSlider gap="md" title="New Release">
                 {isLoading
                   ? Array.from({ length: 5 }).map((_, i) => <VideoCardSkeleton key={i} />)
-                  : NEW_RELEASE?.map((video, idx) => (
+                  : PRODUCTS?.map((video, idx) => (
                       <VideoCard
                         key={idx}
                         cover={video}

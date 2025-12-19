@@ -1,21 +1,22 @@
 "use client";
 
+import { Product } from "@/data/dummy";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
 interface VideoCardProps {
-  cover: string;
+  cover: Product;
   href: string;
 }
 
 export function VideoCard({
-  href,
   cover,
 }: VideoCardProps) {
   const [imgLoaded, setImgLoaded] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const thumbnail = cover.image;
 
   useEffect(() => {
     setIsTouchDevice(window.matchMedia("(hover: none)").matches);
@@ -32,7 +33,7 @@ export function VideoCard({
       "
     >
       <Link
-        href={href}
+        href={`/Products/${cover.slug}`}
         prefetch={false}
         aria-label={`PRODUCT_ITEM`}
         className="block w-full"
@@ -48,7 +49,7 @@ export function VideoCard({
           )}
 
           <Image
-            src={cover || "/assets/images/placeholder_cover.jpg"}
+            src={thumbnail || "/assets/images/placeholder_cover.jpg"}
             alt="PRODUCT_ITEM"
             fill
             loading="lazy"

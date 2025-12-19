@@ -1,5 +1,6 @@
 "use client";
 
+import { Product } from "@/data/dummy";
 import { motion } from "framer-motion";
 import Image, { ImageLoaderProps } from "next/image";
 import Link from "next/link";
@@ -7,7 +8,7 @@ import { useState } from "react";
 
 interface MusicCardProps {
   href: string;
-  cover: string;
+  cover: Product;
 }
 
 const customImageLoader = ({ src, width, quality }: ImageLoaderProps) => {
@@ -23,11 +24,11 @@ const customImageLoader = ({ src, width, quality }: ImageLoaderProps) => {
 };
 
 export function MusicCard({
-  href,
   cover,
 }: MusicCardProps) {
   const [loading, setLoading] = useState(true);
   const [imgError, setImgError] = useState(false);
+  const thumbnail = cover.image;
 
   return (
     <motion.div
@@ -35,7 +36,7 @@ export function MusicCard({
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <Link href={href}>
+      <Link href={`/Products/${cover.slug}`}>
         <div className="
           overflow-hidden 
           bg-neutral-200 
@@ -56,7 +57,7 @@ export function MusicCard({
             )}
 
             <Image
-              src={!imgError && cover ? cover : "/assets/images/placeholder_cover.jpg"}
+              src={!imgError && thumbnail ? thumbnail : "/assets/images/placeholder_cover.jpg"}
               alt="PRODUCT_ITEM"
               loader={customImageLoader}
               fill

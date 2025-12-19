@@ -1,82 +1,77 @@
 "use client";
 
-import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbPage,
-} from "./ui/breadcrumb";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { NavActions } from "./nav-actions";
+import { ChevronRight } from "lucide-react";
 
 export function SiteHeader() {
-  const { data: session } = useSession();
-  const user = session?.user;
-
   const pathname = usePathname();
 
+  // Convert pathname to readable label
+  const segments = pathname
+    .split("/")
+    .filter(Boolean)
+    .map((seg) =>
+      seg.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+    );
+
   const pageTitle =
-    pathname === "/dashboard/upload/song"
-      ? "UPLOAD"
-      : pathname === "/dashboard/upload/video"
-      ? "UPLOAD"
-      : pathname === "/dashboard/profile/edit"
-      ? "PROFILE"
-      : pathname === "/dashboard/upload/album"? "UPLOAD"
-      : "";
+    segments.length > 0
+      ? segments[segments.length - 1]
+      : "Precision Weighing Solutions";
 
   return (
-    <header className="relative flex w-full items-center justify-between overflow-hidden bg-black text-white">
-      {/* Background Image with Overlay */}
+    <header className="relative w-full bg-neutral-200 h-[30vh] min-h-[240px] flex items-center text-white overflow-hidden">
+      {/* Background */}
       <div className="absolute inset-0">
         <Image
-          src="/assets/images/bizzy03.jpg"
-          alt="BACKGROUND_COVER"
+          src="/products/retail-s5.png"
+          alt="Premier Scales Background"
           fill
           priority
-          className="object-cover object-center opacity-70"
+          className="object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-black/65" />
       </div>
 
-      {/* Left Side */}
-      <div className="relative z-10 flex flex-1 items-center gap-3 px-4 md:px-6 py-6">
-        <SidebarTrigger className="bg-white text-black shadow-md rounded-full p-2 hover:bg-gray-200 transition" />
+      {/* Content */}
+      <div className="relative z-10 max-w-5xl mx-auto w-full px-6 md:px-10 flex flex-col gap-4">
+        
+        {/* Breadcrumb */}
+        <nav className="flex items-center text-sm text-neutral-300">
+          <Link
+            href="/"
+            className="hover:text-white transition font-medium"
+          >
+            Home
+          </Link>
 
-        <Separator
-          orientation="vertical"
-          className="h-6 bg-white/40 hidden sm:block"
-        />
+          {segments.map((seg, i) => (
+            <span key={i} className="flex items-center">
+              <ChevronRight className="mx-2 h-4 w-4 text-neutral-400" />
+              <span
+                className={`${
+                  i === segments.length - 1
+                    ? "text-white font-semibold"
+                    : "text-neutral-300"
+                }`}
+              >
+                {seg}
+              </span>
+            </span>
+          ))}
+        </nav>
 
-        <Breadcrumb className="hidden sm:block">
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbPage className="line-clamp-1 flex items-center">
-                <span className="inline-block rounded-full bg-white/10 px-3 py-1 capitalize font-bold text-xs sm:text-sm text-white/80 backdrop-blur-md">
-                  {user?.role} • {user?.location}
-                </span>
-              </BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      </div>
-
-      {/* Right Side */}
-      <div className="relative z-10 ml-auto px-4 md:px-6 py-6 text-right">
-        <h1 className="flex flex-col sm:flex-row sm:items-center sm:gap-3 font-extrabold leading-tight tracking-tight">
-          <span className="bg-gradient-to-r from-yellow-300 via-orange-400 to-red-500 bg-clip-text text-transparent text-3xl md:text-5xl lg:text-6xl">
-            Portal
-          </span>
-          <span className="mt-1 sm:mt-0 block text-base md:text-xl lg:text-2xl text-white">
+        {/* Title */}
+        <div>
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">
             {pageTitle}
-          </span>
-        </h1>
-        {/* Uncomment if needed */}
-        <NavActions />
+          </h1>
+          <p className="mt-2 text-base md:text-lg text-neutral-200 max-w-2xl">
+            Accurately Measuring Zambia
+          </p>
+        </div>
       </div>
     </header>
   );

@@ -13,6 +13,8 @@ import { toast } from "sonner";
 import NavSidebar from "./sidebar";
 //import Image from "next/image";
 import { Separator } from "./ui/separator";
+import TemplatesDropdown from "./TemplatesDropdown";
+import Image from "next/image";
 
 export default function Navbar() {
   const router = useRouter();
@@ -26,7 +28,6 @@ export default function Navbar() {
   const [onSearch] = useState(false);
 
   const navItems = [
-    { label: "Products", href: "/Products" },
     { label: "Market Sectors", href: "/Market-Sector" },
     { label: "About Us", href: "/About-Us" },
     { label: "News", href: "/News" },
@@ -66,15 +67,15 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 md:px-12 flex justify-between items-center h-14">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-         {/* <Image
-            src="/vercel.svg"
+         <Image
+            src="/assets/logo/zm_logo.jpeg"
             alt="Premier-Scales"
-            width={44}
-            height={44}
-            className="rounded-full object-cover"
-          />*/} 
-          <p className="italic text-red-800 text-lg lg:text-1xl truncate">Scales - PremierZM</p>
+            width={60}
+            height={60}
+            className="rounded-xs object-contain"
+          /> 
         </Link>
+        
 
         {/* Desktop */}
         <div className="hidden lg:flex items-center gap-4">
@@ -116,6 +117,7 @@ export default function Navbar() {
 
           {/* Nav */}
           <nav className="flex items-center gap-4">
+            <TemplatesDropdown/>
             {navItems.map((item) => {
               const isActive = pathname === item.href;
               return (

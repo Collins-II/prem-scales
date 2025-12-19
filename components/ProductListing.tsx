@@ -5,18 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { Product } from "@/data/dummy";
 
 /* --------------------------------
    Types
 -------------------------------- */
-export interface ProductItem {
-  id: number;
-  name: string;
-  description: string;
-  image?: string;
-  category: string;
-  href: string;
-}
+
 
 /* --------------------------------
    Props
@@ -25,7 +19,7 @@ interface CategoryProductListingProps {
   title: string;
   categoryLabel: string;
   bannerImage: string;
-  products: ProductItem[];
+  products: Product[];
   viewAllHref?: string;
 }
 
@@ -81,7 +75,7 @@ export default function ProductListing({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4 }}
-              className="relative h-40 sm:h-48 lg:h-full overflow-hidden border border-neutral-200"
+              className="relative h-20 sm:h-48 lg:h-full overflow-hidden "
             >
               <Image
                 src={bannerImage}
@@ -89,22 +83,10 @@ export default function ProductListing({
                 fill
                 className="object-cover"
               />
-                          {/* Genre Tag */}
-            <div className="
-              z-5
-              absolute bottom-3 left-0 md:bottom-4 
-              bg-red-500 dark:bg-white
-              text-white dark:text-black 
-              text-1xl px-2 md:px-4 py-0.5 md:py-1 
-              shadow-lg 
-              whitespace-nowrap 
-              uppercase font-bold
-            ">
-              <p className="text-xs uppercase tracking-wide opacity-90">
-                  {categoryLabel}
-                </p>
-            </div>
-              
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute bottom-3 sm:bottom-5 left-0 bg-red-500 text-white text-xs px-3 py-1 shadow-lg uppercase font-bold">
+                {categoryLabel}
+              </div>
             </motion.div>
           )}
         </div>
@@ -113,20 +95,18 @@ export default function ProductListing({
         <div className="lg:col-span-3 space-y-4">
           <div className="border border-neutral-200 rounded-xl divide-y">
             {loading
-              ? Array.from({ length: 4 }).map((_, i) => (
-                  <ProductSkeleton key={i} />
-                ))
-              : products.map((product, index) => (
+              ? Array.from({ length: 4 }).map((_, i) => <ProductSkeleton key={i} />)
+              : products?.map((product, index) => (
                   <motion.article
                     key={product.id}
                     initial={{ opacity: 0, y: 14 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.05 }}
-                    className="group flex gap-4 p-4 hover:bg-gray-50 transition"
+                    className="group flex flex-col sm:flex-row gap-4 p-4 hover:bg-gray-50 transition rounded-md"
                   >
                     {product.image && (
-                      <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden border border-neutral-200">
+                      <div className="relative w-24 h-24 sm:w-20 sm:h-20 flex-shrink-0 rounded-lg overflow-hidden border border-neutral-200">
                         <Image
                           src={product.image}
                           alt={product.name}
@@ -136,21 +116,27 @@ export default function ProductListing({
                       </div>
                     )}
 
-                    <div className="flex-1">
-                      <p className="text-xs text-gray-500">
-                        {product.category}
-                      </p>
-                      <h4 className="font-semibold text-gray-900 mt-1 group-hover:text-red-600 transition">
-                        {product.name}
-                      </h4>
-                      <p className="text-sm text-gray-600 line-clamp-2 mt-1">
-                        {product.description}
-                      </p>
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <p className="text-xs text-gray-500">{product.category}</p>
+                        <h4 className="font-semibold text-gray-900 mt-1 group-hover:text-red-600 transition">
+                          {product.name}
+                        </h4>
+                        <p className="text-sm text-gray-600 line-clamp-2 mt-1">
+                          {product.description}
+                        </p>
+                      </div>
+
+                      {product.price && (
+                        <p className="text-sm font-bold text-red-600 mt-2">
+                          ZMW {product.price.toLocaleString()}
+                        </p>
+                      )}
                     </div>
 
                     <Link
-                      href={product.href}
-                      className="self-center text-gray-400 group-hover:text-red-600 transition"
+                      href={`/Products/${product.slug}`}
+                      className="self-start sm:self-center text-gray-400 group-hover:text-red-600 transition mt-2 sm:mt-0"
                     >
                       <ArrowRight size={18} />
                     </Link>

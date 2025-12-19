@@ -1,11 +1,11 @@
 {
-  "name": "LoudEar Music",
-  "short_name": "LoudEar",
-  "description": "Stream, download, and discover music and videos with LoudEar.",
+  "name": "Premier Scales Zambia",
+  "short_name": "Scales_ZM",
+  "description": "Accurately Measuring Zambia.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#ff0050",
+  "background_color": "#fff",
+  "theme_color": "#fff",
   "orientation": "portrait",
   "icons": [
     {

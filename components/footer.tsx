@@ -12,6 +12,7 @@ import {
   Linkedin,
   Twitter,
 } from "lucide-react";
+import Image from "next/image";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -33,7 +34,16 @@ export default function Footer() {
           transition={{ duration: 0.5 }}
           className="space-y-4 lg:col-span-1"
         >
-          <p className="italic text-red-800 text-lg lg:text-1xl truncate">Scales - PremierZM</p>
+          {/* Logo */}
+        <Link href="/" className="flex items-center gap-2">
+         <Image
+            src="/assets/logo/zm_logo.jpeg"
+            alt="Premier-Scales"
+            width={44}
+            height={44}
+            className="rounded-xs object-contain"
+          /> 
+        </Link>
 
           <p className="text-sm leading-relaxed text-neutral-600">
             Leading supplier of industrial, retail, and commercial weighing

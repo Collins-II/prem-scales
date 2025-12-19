@@ -1,9 +1,8 @@
 import React from "react";
 import HeroSection from "@/components/hero";
 import Footer from "@/components/footer";
-import ProductListing from "@/components/ProductListing";
-import { scaleProduct } from "@/data/dummy";
 import LatestSection from "@/components/LatestSection";
+import GroupedProducts from "@/components/GroupedProducts";
 
 export default async function Home() {
 
@@ -15,9 +14,7 @@ export default async function Home() {
 
         <LatestSection />
 
-        {scaleProduct.map((category, i) => (
-          <ProductListing key={i} {...category} />
-        ))}
+        <GroupedProducts />
 
         <Footer />
       </div>

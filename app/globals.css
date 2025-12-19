@@ -232,3 +232,13 @@
     @apply bg-white text-foreground;
   }
 }
+
+.gallery-container {
+  perspective: 1000px;
+}
+
+.gallery-image {
+  transform-origin: var(--origin-x, 50%) var(--origin-y, 50%);
+  transform: scale(var(--zoom-scale, 1)) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 0.3s ease;
+}
