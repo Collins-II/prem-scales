@@ -14,7 +14,7 @@ const PRODUCTS_WITH_PRICE = PRODUCTS.map((p, i) => ({
   price: (i + 1) * 100,
 }));
 
-const CATEGORIES = ["All", "Retail", "Commercial", "Laboratory", "Industrial", "Medical"] as const;
+const CATEGORIES = ["Retail", "Commercial", "Laboratory", "Industrial", "Medical"] as const;
 const SORT_OPTIONS = [
   "Default",
   "Price: Low to High",
@@ -22,9 +22,9 @@ const SORT_OPTIONS = [
   "Name: A–Z",
 ] as const;
 
-export default function ProductsPage() {
+export default function MarketPage() {
   const [category, setCategory] =
-    useState<(typeof CATEGORIES)[number]>("All");
+    useState<(typeof CATEGORIES)[number]>("Retail");
   const [sort, setSort] =
     useState<(typeof SORT_OPTIONS)[number]>("Default");
   const [quoteModal, setQuoteModal] = useState<Product | null>(null);
@@ -36,7 +36,7 @@ export default function ProductsPage() {
   /* -------------------- FILTER + SORT -------------------- */
   const filteredProducts = useMemo(() => {
     let items = PRODUCTS_WITH_PRICE.filter((product) => {
-      return category === "All" || product.category === category;
+      return product.category === category;
     });
 
     switch (sort) {
@@ -79,7 +79,7 @@ export default function ProductsPage() {
         }}
       />
 
-  {/* -------------------- FILTER BAR -------------------- */}
+      {/* -------------------- FILTER BAR -------------------- */}
       <section className="w-full bg-white border px-6 md:px-10 ">
         <div className="max-w-5xl mx-auto sm:px-4 py-3 flex flex-col gap-3 sm:gap-4 md:items-center md:justify-center">
   

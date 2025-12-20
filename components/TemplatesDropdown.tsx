@@ -51,7 +51,7 @@ export default function TemplatesDropdown() {
                   {/* Categories Grid */}
                   <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                     {NAVIGATION_DATA.map((item, index) => (
-                      <Link key={index} href={`/Products`}>
+                      <Link key={index} href={`/Products`} onClick={() => setOpen(false)}>
                         <div key={index} className="mb-4 flex p-5 transition-all duration-200 cursor-pointer items-center justify-center rounded-xs bg-gray-100 group-hover:bg-gray-200 transition">
                         <div className="flex flex-col gap-3 w-full h-full justify-center items-center">
                           <div className="relative w-30 h-30">

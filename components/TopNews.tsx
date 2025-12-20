@@ -139,7 +139,7 @@ export default function TopNews() {
                   >
                     <div className="flex-1">
                       <p className="text-xs text-gray-500">{item.date}</p>
-                      <h5 className="font-semibold text-gray-900 leading-snug mt-1 group-hover:text-blue-600 transition">
+                      <h5 className="font-light text-gray-900 leading-snug mt-1 group-hover:text-blue-600 transition">
                         {item.title}
                       </h5>
                     </div>

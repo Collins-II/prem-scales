@@ -109,7 +109,7 @@ export default async function RootLayout({
         </Script>
         {/* Top loader */}
         <Toaster />
-        <NextTopLoader color="#fff" showSpinner={false} />
+        <NextTopLoader color="#fd1b1b" showSpinner={false} />
         <GoogleProvider>
         <ThemeProvider
           attribute="class"

@@ -13,6 +13,17 @@ import { IAlbum } from "@/lib/database/models/album";
 import { IVideo } from "@/lib/database/models/video";
 import { IUser } from "./database/models/user";
 
+
+// utils/getRelatedProducts.ts
+import { PRODUCTS } from "@/data/dummy";
+
+export function getRelatedProducts(tags: string[]) {
+  return PRODUCTS.filter(product =>
+    product.tags?.some(tag => tags.includes(tag))
+  );
+}
+
+
 /**
  * Utility to format and handle view counts.
  * Provides helpers to format, increment, and parse view numbers.

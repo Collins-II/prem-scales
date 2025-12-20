@@ -71,10 +71,10 @@ export default function IndexDetailsPage({ product }: ProductDetailsProps) {
 
         {/* Details */}
         <div className="flex flex-col gap-5">
-           <div className="w-full bg-black pl-4 py-3">
-             <span className="text-[16px] uppercase tracking-widest text-gray-300">
-             {product.category}
-          </span>
+           <div className="w-full bg-black py-3">
+             <span className="text-[16px] uppercase tracking-widest text-gray-800 bg-white p-1">
+               {product.category}
+             </span>
            </div>
           
           <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900 leading-tight">

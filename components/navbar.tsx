@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useSession } from "next-auth/react";
 import { Button } from "./ui/button";
 import { X, Search } from "lucide-react";
-import { TbLoaderQuarter, TbMenu4 } from "react-icons/tb";
+import { TbMenu4 } from "react-icons/tb";
 //import SignInButton from "./auth/SignInButton";
 import { toast } from "sonner";
 import NavSidebar from "./sidebar";
@@ -25,10 +25,18 @@ export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
-  const [onSearch] = useState(false);
 
   const navItems = [
-    { label: "Market Sectors", href: "/Market-Sector" },
+    { label: "Market Sectors", href: "/Market-Sectors" },
+    { label: "Services", href: "/Services" },
+    { label: "About Us", href: "/About-Us" },
+    { label: "News", href: "/News" },
+  ];
+
+    const navMobileItems = [
+    { label: "Products", href: "/Products" },
+    { label: "Market Sectors", href: "/Market-Sectors" },
+    { label: "Services", href: "/Services" },
     { label: "About Us", href: "/About-Us" },
     { label: "News", href: "/News" },
   ];
@@ -52,7 +60,7 @@ export default function Navbar() {
     if (!session) {
       toast("You need to sign in first to submit media.");
     } else {
-      router.push("/studio/dashboard");
+      router.push("/");
       setMobileOpen(false);
     }
   };
@@ -86,7 +94,7 @@ export default function Navbar() {
               onClick={() => setSearchOpen((prev) => !prev)}
               className="p-2 bg-red-600 text-white hover:bg-red-500 transition"
             >
-              {onSearch ? <TbLoaderQuarter size={18} /> : <Search size={18} />}
+              {searchOpen ? <X size={18} /> : <Search size={18} />}
             </button>
 
             <AnimatePresence>
@@ -97,7 +105,7 @@ export default function Navbar() {
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.25 }}
-                  className="absolute right-0 mt-2 w-96 bg-red-500 border border-gray-200 px-3 py-2 flex items-center gap-2 shadow-sm"
+                  className="absolute right-0 mt-2 w-96 bg-transparent pl-3 py-2 flex items-center gap-2"
                 >
                   <input
                     type="text"
@@ -105,9 +113,9 @@ export default function Navbar() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     autoFocus
-                    className="flex-1 px-4 py-1 text-sm bg-gray-100 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-white focus:outline-none"
+                    className="flex-1 px-4 py-1.5 text-sm bg-red-500 text-white placeholder-white focus:ring-2 focus:ring-white focus:outline-none"
                   />
-                  <Button type="submit" size="sm" className="bg-white text-gray-800 hover:bg-white/90 hover:text-black">
+                  <Button type="submit" size="sm" className="bg-red-500 text-white hover:bg-white/90 hover:text-black rounded-none">
                     Go
                   </Button>
                 </motion.form>
@@ -126,7 +134,7 @@ export default function Navbar() {
                   href={item.href}
                   className={`relative px-2 py-1 text-md font-light transition-colors ${
                     isActive
-                      ? "text-red-600 after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-0.5 after:bg-blue-600 after:rounded-full"
+                      ? "text-red-600 after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-0.5 after:bg-red-600 after:rounded-full"
                       : "text-gray-700 hover:text-red-600"
                   }`}
                 >
@@ -148,7 +156,7 @@ export default function Navbar() {
             onClick={() => setMobileSearchOpen((prev) => !prev)}
             className="p-2 bg-red-600 text-white hover:bg-red-500 transition"
           >
-            {onSearch ? <TbLoaderQuarter size={18} /> : <Search size={18} />}
+            {mobileSearchOpen ? <X size={18} /> : <Search size={18} />}
           </button>
 
           <button
@@ -173,7 +181,7 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="lg:hidden px-4 py-2 bg-red-500 border-t border-white flex items-center gap-2"
+            className="lg:hidden px-4 py-2 bg-transparent border-t border-white flex items-center gap-2"
           >
             <input
               type="text"
@@ -181,9 +189,9 @@ export default function Navbar() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               autoFocus
-              className="flex-1 px-4 py-1 text-sm w-full bg-gray-100 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-white focus:outline-none"
+              className="flex-1 px-4 py-1 text-sm w-full bg-red-500 text-white placeholder-white focus:ring-2 focus:ring-white focus:outline-none"
             />
-            <Button type="submit" size="sm" className="bg-white text-gray-800 hover:bg-white/90 hover:text-black">
+            <Button type="submit" size="sm" className="bg-red-500 text-white hover:bg-white hover:text-black rounded-none">
               Go
             </Button>
           </motion.form>
@@ -205,7 +213,7 @@ export default function Navbar() {
 
             <NavSidebar
               scrolled={true}
-              navItems={navItems}
+              navItems={navMobileItems}
               mobileOpen={mobileOpen}
               setMobileOpen={setMobileOpen}
               handleMediaClick={handleMediaClick}
