@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import { Heart, Flame, Laugh, ThumbsUp, ThumbsDown } from "lucide-react";
-import type { CommentSerialized } from "@/actions/getItemsWithStats";
 
 type ReactionType = "heart" | "fire" | "laugh" | "up" | "down";
 
 interface Props {
-  comment: CommentSerialized;
+  comment: any;
   userId?: string;
   onToggle: (commentId: string, type: ReactionType) => void;
 }

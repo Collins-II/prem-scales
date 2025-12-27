@@ -1,14 +1,65 @@
 "use client";
 
 import { Popover, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
-import { NAVIGATION_DATA } from "@/data/navigation";
+import { Fragment, useEffect, useState } from "react";
 import Collection from "@/components/Collection";
 import Image from "next/image";
 import Link from "next/link";
+import slugify from "slugify";
 
+/* ------------------------------------------------------------
+   Types
+------------------------------------------------------------ */
+interface Category {
+  _id: string;
+  name: string;
+  slug: string;
+  image?: string;
+}
+
+/* ------------------------------------------------------------
+   Component
+------------------------------------------------------------ */
 export default function TemplatesDropdown() {
   const [open, setOpen] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  /* ------------------------------------------------------------
+     Fetch Categories
+  ------------------------------------------------------------ */
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchCategories = async () => {
+      try {
+        setLoading(true);
+        setError(false);
+
+        const res = await fetch("/api/categories", {
+          signal: controller.signal,
+          next: { revalidate: 300 } // ✅ cache-friendly
+        });
+
+        if (!res.ok) throw new Error("Failed to fetch categories");
+
+        const data: Category[] = await res.json();
+
+        setCategories(data);
+      } catch (err: any) {
+        if (err.name !== "AbortError") {
+          console.error("[TEMPLATES_DROPDOWN_FETCH]", err);
+          setError(true);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+    return () => controller.abort();
+  }, []);
 
   return (
     <Popover
@@ -18,7 +69,6 @@ export default function TemplatesDropdown() {
     >
       <>
         {/* Trigger */}
-               {/* Trigger */}
         <div className="relative px-3 cursor-pointer">
           <span className="text-md py-1 font-light text-gray-800">
             Products
@@ -50,25 +100,44 @@ export default function TemplatesDropdown() {
 
                   {/* Categories Grid */}
                   <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {NAVIGATION_DATA.map((item, index) => (
-                      <Link key={index} href={`/Products`} onClick={() => setOpen(false)}>
-                        <div key={index} className="mb-4 flex p-5 transition-all duration-200 cursor-pointer items-center justify-center rounded-xs bg-gray-100 group-hover:bg-gray-200 transition">
-                        <div className="flex flex-col gap-3 w-full h-full justify-center items-center">
-                          <div className="relative w-30 h-30">
-                          <Image
-                            src={item.icon}
-                            alt={item.name}
-                            fill
-                            className="object-contain"
-                          />
+                    {loading && (
+                      <p className="col-span-full text-sm text-muted-foreground">
+                        Loading categories…
+                      </p>
+                    )}
+
+                    {error && (
+                      <p className="col-span-full text-sm text-red-500">
+                        Failed to load categories
+                      </p>
+                    )}
+
+                    {!loading &&
+                      !error &&
+                      categories?.map(category => (
+                        <Link
+                          key={category._id}
+                          href={`/Products/${slugify(category.name).toLowerCase()}-scale`}
+                          onClick={() => setOpen(false)}
+                        >
+                          <div className="mb-4 flex p-5 transition-all duration-200 cursor-pointer items-center justify-center rounded-xs bg-gray-100 hover:bg-gray-200">
+                            <div className="flex flex-col gap-3 w-full h-full justify-center items-center">
+                              <div className="relative w-20 h-20">
+                                <Image
+                                  src={category.image || "/products/lab-s1.png"}
+                                  alt={category.name || "CATEGORY_IMAGE"}
+                                  fill
+                                  className="object-contain"
+                                />
+                              </div>
+
+                              <p className="text-sm font-light text-gray-900 text-center line-clamp-2">
+                                {category.name}
+                              </p>
+                            </div>
                           </div>
-                          <p className="text-sm font-light text-gray-900 truncate line-clamp-2">
-                          {item.name}
-                          </p>
-                        </div>
-                        </div>
-                      </Link>
-                    ))}
+                        </Link>
+                      ))}
                   </div>
 
                   {/* Promo / Collection */}

@@ -79,7 +79,7 @@ export default function ServiceDetailsPage({
 
             <div className="grid sm:grid-cols-3 lg:grid-cols-4 gap-8">
               {related.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard key={product._id} product={product} />
               ))}
             </div>
           </div>

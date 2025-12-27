@@ -98,22 +98,82 @@ export const NEW_RELEASE = [
   "/products/lab-s1.png",
 ]
 
-export type Product = {
-  id: number;
-  slug: string; // SEO-friendly URL
+export type Currency = "ZMW" | "USD";
+
+export type AccuracyClass =
+  | "Class I"
+  | "Class II"
+  | "Class III"
+  | "Class IIII";
+
+export type Certification =
+  | "ISO"
+  | "OIML"
+  | "NTEP"
+  | "CE"
+  | "GMP";
+
+  export type Category = {
+  _id: string;
   name: string;
-  category: "Retail" | "Laboratory" | "Industrial";
-  description: string;
-  image: string; // main hero image
-  gallery?: string[]; // additional gallery images
-  price: number; // in ZMW or USD
-  features?: string[]; // key selling points
-  specifications?: Record<string, string>; // e.g., {"Capacity": "30kg", "Precision": "0.01g"}
-  dimensions?: string; // e.g., "Width x Depth x Height"
-  tags?: string[]; // for filtering/search
+  slug: string;
 };
 
-export const PRODUCTS: Product[] = [
+export type ProductVariant = {
+  sku?: string;
+  platformSize?: string;
+  loadCellCount?: number;
+  maxCapacity?: number;
+  price?: number;
+  stock?: number;
+};
+
+export type Product = {
+  _id: string;
+
+  name: string;
+  slug: string;
+
+  category: Category;        // populated object
+  categorySlug: string;
+
+  scaleType: string;         // e.g. "Weighbridge"
+
+  description: string;
+
+  image: string;
+  gallery?: string[];
+
+  price: number;
+  currency: Currency;
+
+  features?: string[];
+  specifications?: Record<string, string>;
+  dimensions?: string;
+
+  minCapacity?: number;
+  maxCapacity?: number;
+
+  accuracyClass?: AccuracyClass;
+  certifications?: Certification[];
+
+  variants?: ProductVariant[];
+
+  stock: number;
+  inStock: boolean;
+
+  tags?: string[];
+
+  isActive: boolean;
+
+  createdAt: string;         // ISO string from API
+  updatedAt: string;
+
+  __v?: number;
+};
+
+
+export const PRODUCTS: any[] = [
   {
     id: 1,
     slug: "digital-retail-scale",
@@ -636,3 +696,211 @@ export const NEWS: NewsArticle[] = [
     },
   },
 ];
+
+export const SCALE_TYPES = [
+  /* ---------------- Retail ---------------- */
+  {
+    name: "Price Computing Scale",
+    slug: "price-computing-scale",
+    categoryType: "Retail",
+    description: "Retail scale that calculates price based on weight"
+  },
+  {
+    name: "Counter Scale",
+    slug: "counter-scale",
+    categoryType: "Retail",
+    description: "Compact bench scale for shops and counters"
+  },
+  {
+    name: "Platform Scale",
+    slug: "platform-scale",
+    categoryType: "Retail",
+    description: "Flat platform scale for medium loads"
+  },
+  {
+    name: "Hanging Scale",
+    slug: "hanging-scale",
+    categoryType: "Retail",
+    description: "Suspended scale commonly used in markets"
+  },
+  {
+    name: "Label Printing Scale",
+    slug: "label-printing-scale",
+    categoryType: "Retail",
+    description: "Scale with integrated label and barcode printing"
+  },
+  {
+    name: "POS Integrated Scale",
+    slug: "pos-integrated-scale",
+    categoryType: "Retail",
+    description: "Scale integrated with point-of-sale systems"
+  },
+
+  /* ---------------- Laboratory ---------------- */
+  {
+    name: "Analytical Balance",
+    slug: "analytical-balance",
+    categoryType: "Laboratory",
+    description: "High-precision balance for laboratory use"
+  },
+  {
+    name: "Precision Balance",
+    slug: "precision-balance",
+    categoryType: "Laboratory",
+    description: "Accurate balance for scientific measurements"
+  },
+  {
+    name: "Micro Balance",
+    slug: "micro-balance",
+    categoryType: "Laboratory",
+    description: "Ultra-high precision balance for micro weights"
+  },
+  {
+    name: "Moisture Analyzer",
+    slug: "moisture-analyzer",
+    categoryType: "Laboratory",
+    description: "Determines moisture content using weight loss"
+  },
+  {
+    name: "Calibration Balance",
+    slug: "calibration-balance",
+    categoryType: "Laboratory",
+    description: "Used for calibration and metrology labs"
+  },
+
+  /* ---------------- Industrial ---------------- */
+  {
+    name: "Floor Scale",
+    slug: "floor-scale",
+    categoryType: "Industrial",
+    description: "Heavy-duty floor-mounted weighing scale"
+  },
+  {
+    name: "Pallet Scale",
+    slug: "pallet-scale",
+    categoryType: "Industrial",
+    description: "Designed for weighing pallets and crates"
+  },
+  {
+    name: "Crane Scale",
+    slug: "crane-scale",
+    categoryType: "Industrial",
+    description: "Suspended scale for lifting equipment"
+  },
+  {
+    name: "Forklift Scale",
+    slug: "forklift-scale",
+    categoryType: "Industrial",
+    description: "Weighing system integrated into forklifts"
+  },
+  {
+    name: "Hopper Scale",
+    slug: "hopper-scale",
+    categoryType: "Industrial",
+    description: "Used in batching and bulk material handling"
+  },
+  {
+    name: "Checkweigher",
+    slug: "checkweigher",
+    categoryType: "Industrial",
+    description: "Verifies product weight in production lines"
+  },
+
+  /* ---------------- Medical ---------------- */
+  {
+    name: "Patient Scale",
+    slug: "patient-scale",
+    categoryType: "Medical",
+    description: "Medical scale for patient weight measurement"
+  },
+  {
+    name: "Wheelchair Scale",
+    slug: "wheelchair-scale",
+    categoryType: "Medical",
+    description: "Designed to weigh patients in wheelchairs"
+  },
+  {
+    name: "Baby Scale",
+    slug: "baby-scale",
+    categoryType: "Medical",
+    description: "High-sensitivity scale for infants"
+  },
+  {
+    name: "BMI Scale",
+    slug: "bmi-scale",
+    categoryType: "Medical",
+    description: "Scale with body mass index calculation"
+  },
+
+  /* ---------------- Agricultural ---------------- */
+  {
+    name: "Livestock Scale",
+    slug: "livestock-scale",
+    categoryType: "Agricultural",
+    description: "Used for weighing animals and livestock"
+  },
+  {
+    name: "Grain Scale",
+    slug: "grain-scale",
+    categoryType: "Agricultural",
+    description: "Measures harvested grains and crops"
+  },
+  {
+    name: "Produce Scale",
+    slug: "produce-scale",
+    categoryType: "Agricultural",
+    description: "Used for fruits and vegetables"
+  },
+  {
+    name: "Milk Weighing Scale",
+    slug: "milk-weighing-scale",
+    categoryType: "Agricultural",
+    description: "Weighs milk yield during production"
+  },
+
+  /* ---------------- Transport & Logistics ---------------- */
+  {
+    name: "Weighbridge",
+    slug: "weighbridge",
+    categoryType: "Industrial",
+    description: "Truck and vehicle weighing system"
+  },
+  {
+    name: "Axle Scale",
+    slug: "axle-scale",
+    categoryType: "Industrial",
+    description: "Measures individual axle loads"
+  },
+  {
+    name: "Portable Vehicle Scale",
+    slug: "portable-vehicle-scale",
+    categoryType: "Industrial",
+    description: "Mobile solution for vehicle weighing"
+  },
+
+  /* ---------------- Portable & Specialty ---------------- */
+  {
+    name: "Pocket Scale",
+    slug: "pocket-scale",
+    categoryType: "Retail",
+    description: "Small portable precision scale"
+  },
+  {
+    name: "Jewelry Scale",
+    slug: "jewelry-scale",
+    categoryType: "Retail",
+    description: "High precision scale for jewelry"
+  },
+  {
+    name: "Postal Scale",
+    slug: "postal-scale",
+    categoryType: "Retail",
+    description: "Used for weighing parcels and mail"
+  },
+  {
+    name: "Luggage Scale",
+    slug: "luggage-scale",
+    categoryType: "Retail",
+    description: "Portable scale for travel luggage"
+  }
+] as const;

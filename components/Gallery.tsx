@@ -7,10 +7,23 @@ interface GalleryProps {
   images: string[];
   initialImage?: string;
   alt?: string;
+  fallbackImage?: string;
 }
 
-export default function Gallery({ images, initialImage, alt }: GalleryProps) {
-  const [mainImage, setMainImage] = useState(initialImage || images[0]);
+const DEFAULT_FALLBACK =
+  "/images/placeholder-product.png"; // add a local placeholder
+
+export default function Gallery({ images, initialImage, alt, fallbackImage = DEFAULT_FALLBACK }: GalleryProps) {
+    const safeImages = images?.length ? images : [fallbackImage];
+
+  const [mainImage, setMainImage] = useState(
+    initialImage && images.includes(initialImage)
+      ? initialImage
+      : safeImages[0]
+  );
+
+  const [loading, setLoading] = useState(true);
+ 
   const [zoom, setZoom] = useState(false);
   const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
@@ -84,22 +97,31 @@ export default function Gallery({ images, initialImage, alt }: GalleryProps) {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
       >
+         {/* Skeleton */}
+        {loading && (
+          <div className="absolute inset-0 animate-pulse bg-gray-100" />
+        )}
         <div className="gallery-image relative w-full h-[260px] sm:h-[340px]">
           <Image
             src={mainImage}
             alt={alt || "Gallery Image"}
             fill
             className="object-contain"
-            priority
+            priority={activeIndex === 0}
+            onLoadingComplete={() => setLoading(false)}
+            onError={() => {
+              setMainImage(fallbackImage);
+              setLoading(false);
+            }}
           />
         </div>
       </div>
 
       {/* Thumbnails */}
-      {images.length > 1 && (
+      {safeImages.length > 1 && (
         <div className="flex flex-col gap-2">
           <div className="flex gap-2 overflow-x-auto scrollbar-none scroll-smooth snap-x snap-mandatory p-2">
-            {images.map((img, idx) => (
+            {safeImages.map((img, idx) => (
               <div
                 key={idx}
                 onClick={() => handleThumbnailClick(img, idx)}
@@ -112,6 +134,10 @@ export default function Gallery({ images, initialImage, alt }: GalleryProps) {
                   alt={`${alt || "Gallery"} ${idx + 1}`}
                   fill
                   className="object-contain p-1"
+                  loading="lazy"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = fallbackImage;
+                  }}
                 />
               </div>
             ))}

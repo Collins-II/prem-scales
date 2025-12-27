@@ -6,7 +6,6 @@ import { User } from "lucide-react";
 import { Composer } from "./Composer";
 import { CommentItem } from "./CommentItem";
 import { getSocket } from "@/lib/socketClient";
-import type { CommentSerialized } from "@/actions/getItemsWithStats";
 import type { User as UserType } from "next-auth";
 import Image from "next/image";
 import { Separator } from "../ui/separator";
@@ -17,7 +16,7 @@ type ReactionType = "heart" | "fire" | "laugh" | "up" | "down";
 interface CommentsProps {
   model: "Song" | "Post" | "Video" | "Album" | string;
   id: string;
-  initialComments: CommentSerialized[];
+  initialComments: any[];
   user?: UserType;
   isAdmin?: boolean;
 }
@@ -29,7 +28,7 @@ export default function Comments({
   user,
   isAdmin = false,
 }: CommentsProps) {
-  const [comments, setComments] = useState<CommentSerialized[]>(initialComments || []);
+  const [comments, setComments] = useState<any[]>(initialComments || []);
   const [replyTo, setReplyTo] = useState<string | null>(null);
   const [isSending, setIsSending] = useState(false);
 
@@ -44,11 +43,11 @@ export default function Comments({
 
     socket.on(
       "comment:new",
-      (payload: { room: string; comment: CommentSerialized; parent?: string | null; tempId?: string }) => {
+      (payload: { room: string; comment: any; parent?: string | null; tempId?: string }) => {
         if (payload.room !== room) return;
 
         setComments((prev) => {
-          const replaceOrAdd = (list: CommentSerialized[]): CommentSerialized[] =>
+          const replaceOrAdd = (list: any[]): any[] =>
             list.map((c) => {
               // Replace temp with real comment
               if (payload.tempId && c._id === payload.tempId) {
@@ -69,7 +68,7 @@ export default function Comments({
             return exists ? replaceOrAdd(prev) : [payload.comment, ...prev];
           }
 
-          const attachReply = (list: CommentSerialized[]): CommentSerialized[] =>
+          const attachReply = (list: any[]): any[] =>
             list.map((c) =>
               c._id === payload.parent
                 ? {
@@ -87,7 +86,7 @@ export default function Comments({
     );
 
     socket.on("comment:reaction", (payload: { commentId: string; reactions: Record<ReactionType, number> }) => {
-      const updateReactions = (list: CommentSerialized[]): CommentSerialized[] =>
+      const updateReactions = (list: any[]): any[] =>
         list.map((c) =>
           c._id === payload.commentId
             ? { ...c, reactions: payload.reactions }
@@ -97,7 +96,7 @@ export default function Comments({
     });
 
     socket.on("comment:update", (payload: { id: string; content: string }) => {
-      const updateContent = (list: CommentSerialized[]): CommentSerialized[] =>
+      const updateContent = (list: any[]): any[] =>
         list.map((c) =>
           c._id === payload.id
             ? { ...c, content: payload.content }
@@ -107,7 +106,7 @@ export default function Comments({
     });
 
     socket.on("comment:delete", (payload: { id: string }) => {
-      const removeComment = (list: CommentSerialized[]): CommentSerialized[] =>
+      const removeComment = (list: any[]): any[] =>
         list
           .filter((c) => c._id !== payload.id)
           .map((c) => ({ ...c, replies: c.replies ? removeComment(c.replies) : [] }));
@@ -131,7 +130,7 @@ export default function Comments({
     setIsSending(true);
 
    /* const tempId = `temp-${Date.now()}`;
-    const tempComment: CommentSerialized = {
+    const tempComment: any = {
       _id: tempId,
       content: text,
       user: {

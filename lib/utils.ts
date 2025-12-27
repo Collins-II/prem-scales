@@ -17,9 +17,16 @@ import { IUser } from "./database/models/user";
 // utils/getRelatedProducts.ts
 import { PRODUCTS } from "@/data/dummy";
 
+export const slugify = (value: string) =>
+value
+.toLowerCase()
+.trim()
+.replace(/[^a-z0-9]+/g, "-")
+.replace(/^-+|-+$/g, "");
+
 export function getRelatedProducts(tags: string[]) {
   return PRODUCTS.filter(product =>
-    product.tags?.some(tag => tags.includes(tag))
+    product.tags?.some((tag: any) => tags.includes(tag))
   );
 }
 

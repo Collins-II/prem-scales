@@ -159,7 +159,7 @@ export default function MarketPage() {
             {paginatedProducts.map(
               (product: Product & { price: number }) => (
                 <ProductCard
-                  key={product.id}
+                  key={product._id}
                   product={product}
                   onRequestQuote={setQuoteModal}
                 />

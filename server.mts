@@ -2,7 +2,6 @@
 import { createServer } from "http";
 import { Server, Socket } from "socket.io";
 import next from "next";
-import { CommentSerialized, ReactionType } from "./actions/getItemsWithStats";
 
 /* --------------------------------------------------
    🧠 Global Socket.IO Instance (prevents duplicates)
@@ -80,7 +79,7 @@ app.prepare().then(() => {
     ---------------------------------------------------*/
     socket.on(
       "comment:new",
-      (payload: { room: string; comment: CommentSerialized; parent?: string }) => {
+      (payload: { room: string; comment: any; parent?: string }) => {
         safeEmit(payload.room, "comment:new", payload);
       }
     );
@@ -93,7 +92,7 @@ app.prepare().then(() => {
       (payload: {
         room: string;
         commentId: string;
-        reactions: Record<ReactionType, number>;
+        reactions: Record<any, number>;
       }) => {
         safeEmit(payload.room, "comment:reaction", payload);
       }

@@ -13,10 +13,9 @@ import {
 import ReactMarkdown from "react-markdown";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { CommentSerialized } from "@/actions/getItemsWithStats";
 
 interface Props {
-  comment: CommentSerialized;
+  comment: any;
   userId?: string;
   onReply: (id: string) => void;
   onEdit: (id: string, text: string) => void;

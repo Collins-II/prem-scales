@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 import Gallery from "@/components/Gallery";
+import slugify from "slugify";
 
 interface ProductDetailsProps {
   product: Product;
@@ -57,7 +58,7 @@ export default function IndexDetailsPage({ product }: ProductDetailsProps) {
       {/* Breadcrumb */}
       <div className="max-w-6xl mx-auto px-4 pt-16">
         <Link
-          href="/Products"
+          href={`/Products/${slugify(product.scaleType).toLowerCase()}-scale`}
           className="text-xs sm:text-sm text-gray-500 hover:text-black transition"
         >
           ← Back to Products
@@ -73,7 +74,7 @@ export default function IndexDetailsPage({ product }: ProductDetailsProps) {
         <div className="flex flex-col gap-5">
            <div className="w-full bg-black py-3">
              <span className="text-[16px] uppercase tracking-widest text-gray-800 bg-white p-1">
-               {product.category}
+               {product.category.name}
              </span>
            </div>
           

@@ -17,7 +17,7 @@ export function ProductCard({
     <div className="group bg-white rounded-sm border border-gray-100 overflow-hidden transition hover:shadow-sm">
       
       {/* Image */}
-      <Link href={`/Products/${product.slug}`}>
+      <Link href={`/Product-Details/${product.slug}`}>
       <div className="relative h-44 sm:h-52">
         <Image
           src={product.image || "/assets/images/placeholder_cover.jpg"}

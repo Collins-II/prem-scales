@@ -98,7 +98,7 @@ export default function ProductListing({
               ? Array.from({ length: 4 }).map((_, i) => <ProductSkeleton key={i} />)
               : products?.map((product, index) => (
                   <motion.article
-                    key={product.id}
+                    key={product._id}
                     initial={{ opacity: 0, y: 14 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -118,7 +118,7 @@ export default function ProductListing({
 
                     <div className="flex-1 flex flex-col justify-between">
                       <div>
-                        <p className="text-xs text-gray-500">{product.category}</p>
+                        <p className="text-xs text-gray-500">{product.category.name}</p>
                         <h4 className="font-semibold text-gray-900 mt-1 group-hover:text-red-600 transition">
                           {product.name}
                         </h4>

@@ -91,6 +91,7 @@
     "react-spotify-web-playback": "^0.14.7",
     "recharts": "^2.15.4",
     "resend": "^6.5.2",
+    "slugify": "^1.6.6",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
     "sonner": "^2.0.7",
