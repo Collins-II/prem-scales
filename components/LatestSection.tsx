@@ -7,7 +7,6 @@ import HorizontalSlider from "./sliders/HorizontalSlider";
 
 import MusicCardSkeleton from "./skeletons/music-card-skeleton";
 import VideoCardSkeleton from "./skeletons/video-card-skeleton";
-import TopNews from "./TopNews";
 import { BANNERS, NEW_RELEASE, PRODUCTS } from "@/data/dummy";
 
 
@@ -38,7 +37,7 @@ export default function LatestSection() {
             <GoogleAd slot="1234567890" />*/}
 
             {/* Top Videos */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+            <div className="max-w-5xl ">
             {PRODUCTS && (
             <div>
               <HorizontalSlider gap="md" title="New Release">
@@ -55,7 +54,6 @@ export default function LatestSection() {
             </div>
             )}
             
-            <TopNews />
             </div>
           </div>
     </section>

@@ -1,62 +1,101 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { PRODUCTS, Product } from "@/data/dummy";
+import { useEffect, useMemo, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Pagination } from "@/components/Pagination";
 import { ProductCard } from "./cards/ProductCard";
+import { usePathname } from "next/navigation";
+import { Product } from "@/data/dummy";
 
-// Enhance dummy data
-const PRODUCTS_WITH_PRICE = PRODUCTS.map((p, i) => ({
-  ...p,
-  price: (i + 1) * 100,
-}));
+/* -------------------- CONSTANTS -------------------- */
 
-const CATEGORIES = ["Retail", "Commercial", "Laboratory", "Industrial", "Medical"] as const;
+const CATEGORIES = [
+  { label: "All", slug: "all" },
+  { label: "Retail", slug: "retail-scale" },
+  { label: "Commercial", slug: "commercial-scale" },
+  { label: "Laboratory", slug: "laboratory-scale" },
+  { label: "Industrial", slug: "industrial-scale" },
+  { label: "Medical", slug: "medical-scale" }
+] as const;
+
+type CategorySlug = typeof CATEGORIES[number]["slug"];
+
+const CATEGORY_SLUGS: readonly CategorySlug[] =
+  CATEGORIES.map(c => c.slug);
+
 const SORT_OPTIONS = [
   "Default",
   "Price: Low to High",
   "Price: High to Low",
-  "Name: A–Z",
+  "Name: A–Z"
 ] as const;
 
-export default function MarketPage() {
-  const [category, setCategory] =
-    useState<(typeof CATEGORIES)[number]>("Retail");
-  const [sort, setSort] =
-    useState<(typeof SORT_OPTIONS)[number]>("Default");
+type SortOption = typeof SORT_OPTIONS[number];
+
+/* -------------------- TYPES -------------------- */
+
+interface ProductsProps {
+  products: Product[];
+}
+
+/* -------------------- HELPERS -------------------- */
+
+
+/* -------------------- COMPONENT -------------------- */
+
+export default function MarketsPage({ products }: ProductsProps) {
+  const pathname = usePathname();
+
+  const [category, setCategory] = useState<CategorySlug>("all");
+  const [sort, setSort] = useState<SortOption>("Default");
   const [quoteModal, setQuoteModal] = useState<Product | null>(null);
 
-  // Pagination
+  /* -------------------- PAGINATION -------------------- */
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(12);
 
+  /* -------------------- URL → STATE -------------------- */
+  useEffect(() => {
+    const match = pathname.match(/\/Market-Sectors\/([^/]+)$/);
+    const slug = match?.[1] as CategorySlug | undefined;
+
+    if (slug && CATEGORY_SLUGS.includes(slug)) {
+      setCategory(slug);
+    } else {
+      setCategory("all");
+    }
+
+    setPage(1);
+  }, [pathname]);
+
   /* -------------------- FILTER + SORT -------------------- */
   const filteredProducts = useMemo(() => {
-    let items = PRODUCTS_WITH_PRICE.filter((product) => {
-      return product.category === category;
-    });
+    let items = [...products];
+
+    if (category !== "all") {
+      items = items.filter(
+        product => product.categorySlug === category
+      );
+    }
 
     switch (sort) {
       case "Price: Low to High":
-        items = [...items].sort((a, b) => a.price - b.price);
+        items.sort((a, b) => a.price - b.price);
         break;
       case "Price: High to Low":
-        items = [...items].sort((a, b) => b.price - a.price);
+        items.sort((a, b) => b.price - a.price);
         break;
       case "Name: A–Z":
-        items = [...items].sort((a, b) =>
-          a.name.localeCompare(b.name)
-        );
+        items.sort((a, b) => a.name.localeCompare(b.name));
         break;
     }
 
     return items;
-  }, [category, sort]);
+  }, [products, category, sort]);
 
-  /* -------------------- PAGINATION -------------------- */
+  /* -------------------- PAGINATED -------------------- */
   const paginatedProducts = useMemo(() => {
     const start = (page - 1) * pageSize;
     return filteredProducts.slice(start, start + pageSize);
@@ -64,56 +103,40 @@ export default function MarketPage() {
 
   return (
     <main className="w-full bg-neutral-50 min-h-screen">
-      {/* SEO JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Product",
-            name: "Premier Scales Zambia Products",
-            brand: "Premier Scales",
-            category: "Weighing Equipment",
-            url: "https://premierscales.co.zm/products",
-          }),
-        }}
-      />
-
       {/* -------------------- FILTER BAR -------------------- */}
-      <section className="w-full bg-white border px-6 md:px-10 ">
+    <section className="w-full bg-white border px-6 md:px-10 ">
         <div className="max-w-5xl mx-auto sm:px-4 py-3 flex flex-col gap-3 sm:gap-4 md:items-center md:justify-center">
-  
-  {/* Categories */}
-  <div className="flex flex-wrap">
-    {CATEGORIES.map((cat) => {
-      const active = category === cat;
 
-      return (
-        <button
-          key={cat}
-          onClick={() => {
-            setCategory(cat);
-            setPage(1);
-          }}
-          className={`
-            px-4 sm:px-12 py-1.5 sm:py-2
-            text-[11px] sm:text-sm
-            font-medium
-            rounded-xs
-            whitespace-nowrap
-            transition
-            ${active
-              ? "bg-black text-white"
-              : "bg-neutral-100 border border-gray-200 text-gray-700 hover:border-black"}
-          `}
-        >
-          {cat}
-        </button>
-      );
-    })}
-  </div>
+          {/* Categories */}
+          <div className="flex flex-wrap">
+            {CATEGORIES.map(cat => {
+              const active = category === cat.slug;
 
-  {/* Sort */}
+              return (
+                <button
+                  key={cat.slug}
+                  onClick={() => {
+                    setCategory(cat.slug);
+                    setPage(1);
+                  }}
+                  className={`
+                    px-4 sm:px-12 py-1.5 sm:py-2
+                    text-xs sm:text-sm font-medium
+                    rounded-xs transition-all
+                    ${active
+                      ? "bg-black text-white shadow-sm"
+                      : "bg-neutral-100 border border-gray-200 text-gray-700 hover:border-black"}
+                  `}
+                  aria-pressed={active}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Sort */}
+   {/* Sort */}
   <div className="flex flex-wrap items-center gap-1 bg-white border border-gray-200 rounded-xs p-1 self-start md:self-auto">
     {SORT_OPTIONS.map((opt) => {
       const active = sort === opt;
@@ -144,27 +167,24 @@ export default function MarketPage() {
     })}
   </div>
 
-</div>
-
+        </div>
       </section>
 
       {/* -------------------- PRODUCTS GRID -------------------- */}
-      <section className="max-w-5xl mx-auto px-6 md:px-10 py-12">
+      <section className="max-w-5xl mx-auto px-6 md:px-10 py-12 min-h-[300px]">
         {paginatedProducts.length === 0 ? (
           <p className="text-center text-gray-500">
             No products found.
           </p>
         ) : (
           <div className="grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {paginatedProducts.map(
-              (product: Product & { price: number }) => (
-                <ProductCard
-                  key={product._id}
-                  product={product}
-                  onRequestQuote={setQuoteModal}
-                />
-              )
-            )}
+            {paginatedProducts.map(product => (
+              <ProductCard
+                key={product._id}
+                product={product}
+                onRequestQuote={setQuoteModal}
+              />
+            ))}
           </div>
         )}
       </section>
@@ -176,7 +196,7 @@ export default function MarketPage() {
           pageSize={pageSize}
           totalItems={filteredProducts.length}
           onPageChange={setPage}
-          onPageSizeChange={(size: any) => {
+          onPageSizeChange={size => {
             setPageSize(size);
             setPage(1);
           }}

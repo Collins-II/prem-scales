@@ -28,7 +28,7 @@ export function MusicCard({
 }: MusicCardProps) {
   const [loading, setLoading] = useState(true);
   const [imgError, setImgError] = useState(false);
-  const thumbnail = cover.image;
+  const thumbnail = "/products/ad7-crane.jpg";
 
   return (
     <motion.div

@@ -1,6 +1,6 @@
 import React from "react";
 import { SiteHeader } from "@/components/site-header";
-import AboutUsPage from "@/components/about-us/AboutUsPage";
+import ContactUsPage from "@/components/ContactUsPage";
 
 export default async function AboutUs() {
 
@@ -10,7 +10,7 @@ export default async function AboutUs() {
       <div className="min-h-screen bg-white pt-14">
         <SiteHeader />
 
-        <AboutUsPage />
+        <ContactUsPage />
       </div>
     </>
   );

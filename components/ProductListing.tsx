@@ -98,7 +98,7 @@ export default function ProductListing({
               ? Array.from({ length: 4 }).map((_, i) => <ProductSkeleton key={i} />)
               : products?.map((product, index) => (
                   <motion.article
-                    key={product._id}
+                    key={index}
                     initial={{ opacity: 0, y: 14 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}

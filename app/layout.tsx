@@ -4,12 +4,12 @@ import "./globals.css";
 import Navbar from "@/components/navbar";
 import NextTopLoader from "nextjs-toploader";
 import ReduxProvider from "@/lib/provider/redux_provider";
-import GlobalAudioPlayer from "@/components/global_audio_player";
 import Script from "next/script";
 import GoogleProvider from "@/lib/provider/google_provider";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { getCurrentUser } from "@/actions/getCurrentUser";
+import FloatingWhatsApp from "@/components/common/FloatingWhatsApp";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -132,7 +132,7 @@ export default async function RootLayout({
             <main className="flex-1">{children}</main>
 
             {/* Global Audio Player (always pinned bottom) */}
-            <GlobalAudioPlayer />
+            <FloatingWhatsApp phone="260970785901" />
           </div>
         </ReduxProvider>
         </ThemeProvider>

@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
-const img1 = "/products/retail-s4.png";
-const img2 = "/products/retail-s1.png";
-const img3 = "/products/lab-s1.png";
+const img1 = "/products/ad3-price_computing.jpg";
+const img2 = "/products/ad4-livestock.jpg";
+const img3 = "/products/ad5-weighbridge.jpg";
 
 interface Slide {
   id: number;

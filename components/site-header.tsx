@@ -20,13 +20,13 @@ const HEADER_CONFIG: Record<
     image: "/products/retail-s3.png",
     subtitle: "Professional Calibration & Support",
   },
-  "/about-us": {
+  "/why-us": {
     image: "/products/lab-s2.png",
     subtitle: "Trusted Precision Since Day One",
   },
-  "/news": {
+  "/contact-us": {
     image: "/products/retail-s5.png",
-    subtitle: "Latest Updates & Industry Insights",
+    subtitle: "Get In-Touch With Us",
   },
   "/products": {
     image: "/products/retail-s4.png",

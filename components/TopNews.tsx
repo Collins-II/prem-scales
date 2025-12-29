@@ -125,7 +125,7 @@ export default function TopNews() {
 
         {/* News List */}
         <div className="lg:col-span-3 space-y-2 ">
-          <div className="border border-neutral-200 rounded-xl divide-y">
+          <div className="border border-neutral-200 rounded-xl divide-y-neutral-200">
             {loading
               ? Array.from({ length: 3 }).map((_, i) => <NewsItemSkeleton key={i} />)
               : news.map((item, index) => (

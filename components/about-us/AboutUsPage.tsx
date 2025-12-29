@@ -1,21 +1,34 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { CheckCircle } from "lucide-react";
+import {
+  CheckCircle,
+  ShieldCheck,
+  Wrench,
+  Clock,
+  Award,
+} from "lucide-react";
 
-const values = [
+const differentiators = [
   {
-    title: "Accuracy & Compliance",
-    desc: "We deliver precise, certified weighing solutions aligned with national and international standards.",
+    title: "Certified Accuracy",
+    desc: "All services follow national and international weighing standards with full documentation.",
+    icon: ShieldCheck,
   },
   {
-    title: "Professional Expertise",
-    desc: "Our team consists of trained technicians with deep industry experience.",
+    title: "Industry Expertise",
+    desc: "Experienced technicians with deep knowledge across retail, industrial, and laboratory environments.",
+    icon: Award,
   },
   {
-    title: "Customer Commitment",
-    desc: "We focus on long-term partnerships, not one-off transactions.",
+    title: "End-to-End Service",
+    desc: "From supply and installation to calibration, maintenance, and compliance certification.",
+    icon: Wrench,
+  },
+  {
+    title: "Fast Response Times",
+    desc: "On-site support and rapid turnaround to minimize downtime and operational risk.",
+    icon: Clock,
   },
 ];
 
@@ -25,59 +38,73 @@ const industries = [
   "Industrial & Manufacturing",
   "Logistics & Transport",
   "Agriculture & Commodities",
+  "Healthcare & Pharmaceuticals",
 ];
 
-export default function AboutUsPage() {
+const process = [
+  {
+    step: "01",
+    title: "Assessment",
+    desc: "We evaluate your operational needs, compliance requirements, and usage environment.",
+  },
+  {
+    step: "02",
+    title: "Implementation",
+    desc: "Professional installation, configuration, or calibration using certified equipment.",
+  },
+  {
+    step: "03",
+    title: "Verification",
+    desc: "Testing, certification, and documentation to ensure accuracy and compliance.",
+  },
+  {
+    step: "04",
+    title: "Ongoing Support",
+    desc: "Preventive maintenance, service contracts, and priority technical support.",
+  },
+];
+
+export default function WhyUsPage() {
   return (
     <main className="bg-white">
 
-      {/* Story */}
-      <section className="max-w-5xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
+      {/* ================= HERO ================= */}
+      <section className="max-w-5xl mx-auto px-6 py-12 items-center">
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-            Who We Are
-          </h2>
-          <p className="mt-4 text-gray-600 leading-relaxed">
-            We are a Zambian-based provider of professional weighing equipment
-            and services, supporting businesses across retail, laboratory,
-            industrial, and logistics sectors.
-          </p>
-          <p className="mt-4 text-gray-600 leading-relaxed">
-            From supply and installation to calibration, maintenance, and
-            compliance certification, we help our clients operate with
-            confidence and accuracy.
+          <span className="text-xs uppercase tracking-wide text-red-600 font-semibold">
+            Why Choose Us
+          </span>
+          <h1 className="mt-3 text-3xl md:text-4xl font-extrabold text-gray-900">
+            Trusted Weighing Solutions Built on Accuracy & Compliance
+          </h1>
+          <p className="mt-6 text-gray-600 leading-relaxed max-w-xl">
+            We help businesses operate with confidence by delivering precise,
+            certified weighing solutions supported by expert service and
+            long-term reliability.
           </p>
         </div>
 
-        <div className="relative h-[360px] rounded-2xl overflow-hidden">
-          <Image
-            src="/products/lab-s1.png"
-            alt="Our Work"
-            fill
-            className="object-cover"
-          />
-        </div>
       </section>
 
-      {/* Values */}
-      <section className="bg-neutral-50 py-20">
+      {/* ================= DIFFERENTIATORS ================= */}
+      <section className="bg-neutral-50 py-12">
         <div className="max-w-5xl mx-auto px-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-12">
-            Our Values
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-14">
+            What Sets Us Apart
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {values.map((value, i) => (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {differentiators.map((item, i) => (
               <div
                 key={i}
-                className="bg-white rounded-2xl p-6"
+                className="bg-white rounded-2xl p-2 "
               >
-                <CheckCircle className="h-6 w-6 text-red-600" />
+                <item.icon className="h-7 w-7 text-red-600" />
                 <h3 className="mt-4 font-semibold text-lg text-gray-900">
-                  {value.title}
+                  {item.title}
                 </h3>
-                <p className="mt-2 text-gray-600 text-sm leading-relaxed">
-                  {value.desc}
+                <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+                  {item.desc}
                 </p>
               </div>
             ))}
@@ -85,48 +112,74 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      {/* Industries */}
-      <section className="max-w-5xl mx-auto px-6 py-20">
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
-          Industries We Serve
+      {/* ================= PROCESS ================= */}
+      <section className="max-w-5xl mx-auto px-6 py-12">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-12">
+          How We Work
         </h2>
 
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {industries.map((industry, i) => (
-            <div
-              key={i}
-              className="text-[11px] md:text-sm border rounded-xl px-5 py-4 text-gray-700 font-medium"
-            >
-              {industry}
+        <div className="grid md:grid-cols-4 gap-8">
+          {process.map((step, i) => (
+            <div key={i} className="relative">
+              <span className="text-5xl font-extrabold text-neutral-300">
+                {step.step}
+              </span>
+              <h3 className="mt-4 font-semibold text-gray-900">
+                {step.title}
+              </h3>
+              <p className="mt-2 text-sm text-gray-600">
+                {step.desc}
+              </p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-gray-900 text-white py-20">
+      {/* ================= INDUSTRIES ================= */}
+      <section className="bg-neutral-50 py-12">
+        <div className="max-w-5xl mx-auto px-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-10">
+            Industries We Support
+          </h2>
+
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {industries.map((industry, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2 bg-white border rounded-xl px-5 py-4 text-sm text-gray-700 font-medium"
+              >
+                <CheckCircle className="h-4 w-4 text-red-600" />
+                {industry}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= CTA ================= */}
+      <section className="bg-gray-900 text-white py-12">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-2xl md:text-3xl font-bold">
-            Partner With a Trusted Weighing Solutions Provider
+            Work With a Proven Weighing Partner
           </h2>
-          <p className="mt-4 text-neutral-300">
-            Whether you need equipment, calibration, or long-term service
-            support, we are ready to help.
+          <p className="mt-4 text-neutral-300 max-w-xl mx-auto">
+            From compliance-critical calibration to long-term service support,
+            we help your operations stay accurate, reliable, and compliant.
           </p>
 
-          <div className="mt-8 flex justify-center gap-4">
+          <div className="mt-10 flex justify-center gap-4">
             <Link
               href="/Services"
-              className="rounded-full text-[11px] text-xs bg-red-600 px-8 py-3 font-semibold hover:bg-red-700 transition"
+              className="rounded-full bg-red-600 px-8 py-3 text-xs font-semibold hover:bg-red-700 transition"
             >
-              View Services
+              Explore Our Services
             </Link>
 
             <Link
-              href="/Contact"
-              className="rounded-full text-[11px] text-xs border border-white/40 px-8 py-3 font-semibold hover:bg-white hover:text-black transition"
+              href="/Contact-Us"
+              className="rounded-full border border-white/40 px-8 py-3 text-xs font-semibold hover:bg-white hover:text-black transition"
             >
-              Contact Us
+              Request a Consultation
             </Link>
           </div>
         </div>

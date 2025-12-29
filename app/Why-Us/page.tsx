@@ -1,8 +1,8 @@
 import React from "react";
 import { SiteHeader } from "@/components/site-header";
-import MarketPage from "@/components/MarketPage";
+import WhyUsPage from "@/components/about-us/AboutUsPage";
 
-export default async function MarketSectors() {
+export default async function WhyUsIndex() {
 
   return (
     <>
@@ -10,7 +10,7 @@ export default async function MarketSectors() {
       <div className="min-h-screen bg-white pt-14">
         <SiteHeader />
 
-        <MarketPage />
+        <WhyUsPage />
       </div>
     </>
   );

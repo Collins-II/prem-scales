@@ -27,18 +27,18 @@ export default function Navbar() {
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   const navItems = [
-    { label: "Market Sectors", href: "/Market-Sectors" },
+    { label: "Industry Sectors", href: "/Industry-Sectors" },
     { label: "Services", href: "/Services" },
-    { label: "About Us", href: "/About-Us" },
-    { label: "News", href: "/News" },
+    { label: "Why Us", href: "/Why-Us" },
+    { label: "Contact Us", href: "/Contact-Us" },
   ];
 
     const navMobileItems = [
     { label: "Products", href: "/Products" },
-    { label: "Market Sectors", href: "/Market-Sectors" },
+    { label: "Industry Sectors", href: "/Industry-Sectors" },
     { label: "Services", href: "/Services" },
-    { label: "About Us", href: "/About-Us" },
-    { label: "News", href: "/News" },
+    { label: "Why Us", href: "/Why-Us" },
+    { label: "Contact Us", href: "/Contact-Us" },
   ];
 
   const handleSearch = (e: React.FormEvent) => {

@@ -3,10 +3,10 @@
 const BASE_URL =
   process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3001";
 
-export async function getProductsByType(slug: string) {
+export async function getProductsByType() {
   try {
     const res = await fetch(
-      `${BASE_URL}/api/products/type/${slug}`,
+      `${BASE_URL}/api/products`,
       { cache: "no-store" }
     );
 

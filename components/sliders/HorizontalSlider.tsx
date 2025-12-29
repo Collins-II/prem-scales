@@ -80,9 +80,9 @@ export default function HorizontalSlider({
         <button
           aria-label="Scroll left"
           onClick={() => scrollByAmount(-360)}
-          className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10
+          className="flex absolute left-0 top-1/2 -translate-y-1/2 z-10
           h-7 w-7 items-center justify-center rounded-full
-          bg-white/90 backdrop-blur border shadow-md
+          bg-white/90 backdrop-blur border border-neutral-400 shadow-md
           hover:scale-105 transition"
         >
           <ChevronLeft className="h-4 w-4 text-gray-900" />
@@ -92,9 +92,9 @@ export default function HorizontalSlider({
         <button
           aria-label="Scroll right"
           onClick={() => scrollByAmount(360)}
-          className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10
+          className="flex absolute right-0 top-1/2 -translate-y-1/2 z-10
           h-7 w-7 items-center justify-center rounded-full
-          bg-white/90 backdrop-blur border shadow-md
+          bg-white/90 backdrop-blur border border-neutral-400 shadow-md
           hover:scale-105 transition"
         >
           <ChevronRight className="h-4 w-4 text-gray-900" />
