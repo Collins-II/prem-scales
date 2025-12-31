@@ -1,18 +1,23 @@
 "use client";
 
 import { MusicCard } from "./music/MusicCard";
-import { VideoCard } from "./video/VideoCard";
-import HorizontalSlider from "./sliders/HorizontalSlider";
-//import GoogleAd from "./ads/AdSlot";
 
 import MusicCardSkeleton from "./skeletons/music-card-skeleton";
 import VideoCardSkeleton from "./skeletons/video-card-skeleton";
-import { BANNERS, NEW_RELEASE, PRODUCTS } from "@/data/dummy";
+import { BANNERS, Product, PRODUCTS } from "@/data/dummy";
+import InfiniteSlider from "./sliders/InfiniteSlider";
+import { ProductCard } from "./cards/ProductCard";
+import ThemedHeading from "./themed-heading";
 
+interface SectionProps {
+  products: Product[];
+  banners: any[];
+}
 
-export default function LatestSection() {
+export default function LatestSection({ products, banners }: SectionProps ) {
 
-  const isLoading = (!BANNERS?.length && !NEW_RELEASE?.length);
+  const isLoading = (!BANNERS?.length && !products?.length);
+  const slug = PRODUCTS[0].scaleType;
 
   return (
     <section className="py-16 bg-white">
@@ -20,10 +25,10 @@ export default function LatestSection() {
             {/* Trending Music */}
             <div className="md:px-0">
 
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 pb-4 scrollbar-hide">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pb-4 scrollbar-hide">
                 {isLoading
                   ? Array.from({ length: 6 }).map((_, i) => <MusicCardSkeleton key={i} />)
-                  : PRODUCTS?.slice(0,4)?.map((track, idx) => (
+                  : banners?.slice(0,4)?.map((track, idx) => (
                       <MusicCard
                         key={idx}
                         href={`/Products`}
@@ -38,19 +43,19 @@ export default function LatestSection() {
 
             {/* Top Videos */}
             <div className="max-w-5xl ">
-            {PRODUCTS && (
+            {products && products.length > 0 && (
             <div>
-              <HorizontalSlider gap="md" title="New Release">
+              <ThemedHeading title="New Release" link={`/Products/${slug}`} className="mb-3"/>
+              <InfiniteSlider gap={4} >
                 {isLoading
                   ? Array.from({ length: 5 }).map((_, i) => <VideoCardSkeleton key={i} />)
-                  : PRODUCTS?.map((video, idx) => (
-                      <VideoCard
+                  : products?.map((video, idx) => (
+                      <ProductCard
                         key={idx}
-                        cover={video}
-                        href="/Products"
+                        product={video}
                       />
                     ))}
-              </HorizontalSlider>
+              </InfiniteSlider>
             </div>
             )}
             

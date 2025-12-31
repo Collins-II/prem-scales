@@ -1,17 +1,12 @@
 import IndexProducts from "./components/IndexProducts";
 import { getProductsByType } from "@/actions/getProductsByType";
 
-interface ProductIndexProps {
-  params: { slug: string };
-}
 
 // Make the page async to safely unwrap params
-export default async function ProductIndexPage({ params }: ProductIndexProps) {
-  // If params is a promise, await it
-  const resolvedParams = await params;
-  const { slug } = resolvedParams;
+export default async function ProductIndexPage() {
 
- const products = await getProductsByType(slug);
+
+ const products = await getProductsByType();
 
   if (!products) {
     return (

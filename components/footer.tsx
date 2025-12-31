@@ -3,8 +3,44 @@
 import Link from "next/link";
 import { Mail, Phone, MapPin, Facebook, Linkedin, Twitter } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Footer() {
+
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState("");
+  
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    setSuccess(false);
+
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        body: JSON.stringify({
+          email: formData.get("email"),
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!res.ok) throw new Error("Failed to subscribe");
+
+      setSuccess(true);
+      e.currentTarget.reset();
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <footer className="bg-gray-50 border-t text-gray-700">
       <div className="max-w-6xl mx-auto px-6 py-16 grid sm:grid-cols-2 md:grid-cols-4 gap-8">
@@ -89,17 +125,29 @@ export default function Footer() {
           <p className="text-sm text-gray-600 mb-4">
             Subscribe for updates, offers, and latest news.
           </p>
-          <form className="flex flex-col sm:flex-row gap-2">
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
+            <div className="flex flex-col gap-2">
             <input
               type="email"
               placeholder="Your email"
               className="flex-1 rounded-xl border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-600"
             />
+            {error && (
+              <p className="text-sm text-red-600">{error}</p>
+            )}
+
+            {success && (
+              <p className="text-sm text-green-600">
+                Your message has been sent successfully.
+              </p>
+            )}
+            </div>
             <button
               type="submit"
-              className="rounded-xl bg-red-600 px-4 py-2 text-white text-sm font-semibold hover:bg-red-700 transition"
+              className="h-8 flex items-center rounded-xl bg-red-600 px-4 py-2 text-white text-sm font-semibold hover:bg-red-700 transition"
             >
-              Subscribe
+              
+              {loading ? "Subscribing..." : "Subscribe"}
             </button>
           </form>
         </div>

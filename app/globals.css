@@ -185,15 +185,15 @@
   height: 8px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #9ca3af; /* gray thumb */
+  background: #e03c30; /* gray thumb */
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #6b7280;
+  background: #e03c30;
 }
 * {
   scrollbar-width: thin;
-  scrollbar-color: #9ca3af transparent;
+  scrollbar-color: #e03c30 transparent;
 }
 
 /* Base Typography & Background */

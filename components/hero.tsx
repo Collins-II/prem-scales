@@ -6,37 +6,19 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
-const img1 = "/products/ad3-price_computing.jpg";
-const img2 = "/products/ad4-livestock.jpg";
-const img3 = "/products/ad5-weighbridge.jpg";
-
 interface Slide {
-  id: number;
+  _id: string;
   image: string;
   link: string;
 }
 
-const slides: Slide[] = [
-  {
-    id: 1,
-    image: img1,
-    link: "/Products",
-  },
-  {
-    id: 2,
-    image: img2,
-    link: "/Products",
-  },
-  {
-    id: 3,
-    image: img3,
-    link: "/Products",
-  },
-];
-
 const AUTOPLAY_MS = 15000;
 
-export default function Hero() {
+interface HeroProps {
+  heros: Slide[];
+}
+
+export default function Hero({ heros }: HeroProps) {
   const [index, setIndex] = React.useState(0);
   const [progressKey, setProgressKey] = React.useState(0);
 
@@ -48,19 +30,19 @@ export default function Hero() {
   // Auto slide
   React.useEffect(() => {
     const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % slides.length);
+      setIndex((prev) => (prev + 1) % heros.length);
       setProgressKey((k) => k + 1);
     }, AUTOPLAY_MS);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [heros]);
 
   return (
     <section className="w-full bg-white pt-14">
       <div className="relative h-[30vh] sm:h-[70vh] overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
-            key={slides[index].id}
+            key={heros[index]._id}
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
@@ -68,7 +50,7 @@ export default function Hero() {
             className="absolute inset-0"
           >
             <Image
-              src={slides[index].image}
+              src={heros[index].image}
               alt="IMAGE_SLIDE"
               fill
               priority
@@ -86,7 +68,7 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.4, ease: "easeOut" }}
               >
-                <Link href={slides[index].link}>
+                <Link href={heros[index].link}>
                   <motion.div
                     whileHover={{ scale: 1.08 }}
                     whileTap={{ scale: 0.95 }}
@@ -94,7 +76,7 @@ export default function Hero() {
                   >
                     <Button
                       size="lg"
-                      className="rounded-full px-8 bg-transparent border border-white text-white hover:bg-orange-700 shadow-md"
+                      className="rounded-full px-8 bg-transparent border border-white text-white hover:bg-black shadow-md"
                     >
                       More
                     </Button>
@@ -107,7 +89,7 @@ export default function Hero() {
 
         {/* Measuring-scale Dots */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20">
-          {slides.map((_, i) => {
+          {heros.map((_, i) => {
             const active = i === index;
 
             return (

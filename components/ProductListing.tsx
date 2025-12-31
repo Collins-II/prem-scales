@@ -83,8 +83,8 @@ export default function ProductListing({
                 fill
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-3 sm:bottom-5 left-0 bg-red-500 text-white text-xs px-3 py-1 shadow-lg uppercase font-bold">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+              <div className="absolute bottom-3 sm:bottom-5 left-0 bg-white text-red-600 text-md pr-3 py-1 shadow-lg uppercase font-bold">
                 {categoryLabel}
               </div>
             </motion.div>
@@ -96,7 +96,7 @@ export default function ProductListing({
           <div className="border border-neutral-200 rounded-xl divide-y">
             {loading
               ? Array.from({ length: 4 }).map((_, i) => <ProductSkeleton key={i} />)
-              : products?.map((product, index) => (
+              : products?.slice(0,6).map((product, index) => (
                   <motion.article
                     key={index}
                     initial={{ opacity: 0, y: 14 }}
@@ -119,7 +119,7 @@ export default function ProductListing({
                     <div className="flex-1 flex flex-col justify-between">
                       <div>
                         <p className="text-xs text-gray-500">{product.category.name}</p>
-                        <h4 className="font-semibold text-gray-900 mt-1 group-hover:text-red-600 transition">
+                        <h4 className="font-semibold text-gray-700 mt-1 group-hover:text-red-600 transition">
                           {product.name}
                         </h4>
                         <p className="text-sm text-gray-600 line-clamp-2 mt-1">
@@ -128,14 +128,14 @@ export default function ProductListing({
                       </div>
 
                       {product.price && (
-                        <p className="text-sm font-bold text-red-600 mt-2">
+                        <p className="text-sm font-bold text-red-500 mt-2">
                           ZMW {product.price.toLocaleString()}
                         </p>
                       )}
                     </div>
 
                     <Link
-                      href={`/Products/${product.slug}`}
+                      href={`/Product-Details/${product.slug}`}
                       className="self-start sm:self-center text-gray-400 group-hover:text-red-600 transition mt-2 sm:mt-0"
                     >
                       <ArrowRight size={18} />

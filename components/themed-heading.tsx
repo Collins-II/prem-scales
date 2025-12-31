@@ -36,14 +36,14 @@ export default function ThemedHeading({
       {link && (
         <Link
             href={link}
-             className=" flex items-center text-xs font-semibold tracking-widest uppercase text-neutral-500">More <ArrowRight size={16} />
+             className=" flex items-center text-xs font-semibold tracking-widest uppercase text-red-500">More <ArrowRight size={16} />
           </Link>
       )}
       </div>
 
       {/* Accent line */}
       <div
-        className={`mt-1 h-[1px] w-full bg-neutral-400 dark:bg-neutral-100 ${
+        className={`mt-1 h-[1px] w-full bg-neutral-200 ${
           align === "center" ? "mx-auto" : ""
         }`}
       />

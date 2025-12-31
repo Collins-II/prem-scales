@@ -10,7 +10,6 @@ import { useRouter, usePathname } from "next/navigation";
 
 /* -------------------- SCALE TYPES -------------------- */
 const SCALE_TYPES = [
-  "All",
   "Retail",
   "Laboratory",
   "Industrial",
@@ -37,7 +36,6 @@ interface ProductsProps {
 }
 
 function scaleTypeToSlug(type: string) {
-  if (type === "All") return "/Products";
 
   return `/Products/${type
     .toLowerCase()
@@ -49,7 +47,7 @@ export default function ProductsPage({ products = [] }: ProductsProps) {
   const router = useRouter();
   const pathname = usePathname();
   const [scaleType, setScaleType] =
-    useState<(typeof SCALE_TYPES)[number]>("All");
+    useState<(typeof SCALE_TYPES)[number]>("Retail");
 
   const [sort, setSort] =
     useState<(typeof SORT_OPTIONS)[number]>("Default");
@@ -77,7 +75,7 @@ export default function ProductsPage({ products = [] }: ProductsProps) {
   /* -------------------- FILTER + SORT -------------------- */
   const filteredProducts = useMemo(() => {
     let items = products.filter(product =>
-      scaleType === "All" ? true : product.scaleType === scaleType
+      product.scaleType === scaleType
     );
 
     switch (sort) {

@@ -1,18 +1,14 @@
-import { PRODUCTS, Product } from "@/data/dummy";
 import ProductListing from "@/components/ProductListing";
+import { GroupedProducts } from "@/types/products";
 
 // Group products by category
-const groupedProducts: Record<string, Product[]> = PRODUCTS.reduce(
-  (acc, product) => {
-    if (!acc[product.category]) acc[product.category] = [];
-    acc[product.category].push(product);
-    return acc;
-  },
-  {} as Record<string, Product[]>
-);
+
+interface GroupedProps {
+  groupedProducts: GroupedProducts;
+}
 
 // Render listings
-export default function GroupedProducts() {
+export default function GroupedProductsPage({ groupedProducts }: GroupedProps) {
   return (
     <div className="space-y-8">
       {Object.entries(groupedProducts).map(([category, products], index) => (
@@ -22,7 +18,7 @@ export default function GroupedProducts() {
           categoryLabel={category}        // Label for banner
           bannerImage={products[0].image || "/placeholder.png"} // pick first product image as banner
           products={products}
-          viewAllHref={`/products/${category.toLowerCase()}`} // optional
+          viewAllHref={`/Products/${category.toLowerCase()}`} // optional
         />
       ))}
     </div>
