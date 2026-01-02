@@ -1,13 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Dialog } from "@headlessui/react";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
 import { Pagination } from "@/components/Pagination";
 import { ProductCard } from "./cards/ProductCard";
 import { usePathname } from "next/navigation";
 import { Product } from "@/data/dummy";
+import { RequestQuoteModal } from "./modals/RequestQuoteModal";
 
 /* -------------------- CONSTANTS -------------------- */
 
@@ -127,7 +125,7 @@ export default function MarketsPage({ products }: ProductsProps) {
                       ? "bg-black text-white shadow-sm"
                       : "bg-neutral-100 border border-gray-200 text-gray-700 hover:border-black"}
                   `}
-                  aria-pressed={active}
+                  
                 >
                   {cat.label}
                 </button>
@@ -159,7 +157,7 @@ export default function MarketsPage({ products }: ProductsProps) {
               ? "bg-black text-white shadow-sm"
               : "text-gray-600 hover:text-black hover:bg-gray-50"}
           `}
-          aria-pressed={active}
+          
         >
           {opt}
         </button>
@@ -204,35 +202,11 @@ export default function MarketsPage({ products }: ProductsProps) {
       </div>
 
       {/* -------------------- REQUEST QUOTE MODAL -------------------- */}
-      <Dialog
+  <RequestQuoteModal
         open={!!quoteModal}
+        product={quoteModal}
         onClose={() => setQuoteModal(null)}
-        className="relative z-50"
-      >
-        <div className="fixed inset-0 bg-black/50" />
-        <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Dialog.Panel className="bg-white rounded-xl p-6 max-w-md w-full">
-            <Dialog.Title className="text-xl font-bold">
-              Request a Quote
-            </Dialog.Title>
-
-            <p className="mt-2 text-gray-600">
-              We’ll contact you regarding{" "}
-              <strong>{quoteModal?.name}</strong>.
-            </p>
-
-            <form className="mt-4 flex flex-col gap-4">
-              <Input placeholder="Full Name" />
-              <Input type="email" placeholder="Email Address" />
-              <Input type="tel" placeholder="Phone Number" />
-              <Textarea rows={3} placeholder="Additional Notes" />
-              <button className="bg-black text-white py-2 rounded-md">
-                Submit Request
-              </button>
-            </form>
-          </Dialog.Panel>
-        </div>
-      </Dialog>
+       />
     </main>
   );
 }

@@ -1,13 +1,13 @@
 import React from "react";
 import { SiteHeader } from "@/components/site-header";
 import ProductsPage from "@/components/ProductsPage";
+import { Product } from "@/data/dummy";
 
 interface IndexProps {
-    products: any;
+    products: Product[];
 }
 
 export default async function IndexProducts({ products }: IndexProps) {
-    console.log("PRODUCTS+BY+TYPE", products)
 
   return (
     <>

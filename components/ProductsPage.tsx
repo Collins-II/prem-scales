@@ -1,81 +1,82 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Dialog } from "@headlessui/react";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
 import { Pagination } from "@/components/Pagination";
 import { ProductCard } from "./cards/ProductCard";
 import { useRouter, usePathname } from "next/navigation";
+import { Product } from "@/data/dummy";
+import { RequestQuoteModal } from "./modals/RequestQuoteModal";
 
-/* -------------------- SCALE TYPES -------------------- */
-const SCALE_TYPES = [
-  "Retail",
-  "Laboratory",
-  "Industrial",
-  "Medical",
-  "Agricultural",
-  "Weighbridge",
-  "Platform",
-  "Crane",
-  "Analytical",
-  "Counting"
-] as const;
-
+/* -------------------- SORT OPTIONS -------------------- */
 const SORT_OPTIONS = [
   "Default",
   "Price: Low to High",
   "Price: High to Low",
-  "Name: A–Z"
+  "Name: A–Z",
 ] as const;
 
 /* -------------------- TYPES -------------------- */
-
 interface ProductsProps {
-  products: any[];
+  products: Product[];
 }
 
 function scaleTypeToSlug(type: string) {
-
-  return `/Products/${type
-    .toLowerCase()
-    .replace(/\s+/g, "-")}-scale`;
+  return `/Products/${type.toLowerCase().replace(/\s+/g, "-")}-scale`;
 }
 
+function slugToScaleType(slug: string) {
+  return slug
+    .replace(/-scale$/, "")
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, l => l.toUpperCase());
+}
 
 export default function ProductsPage({ products = [] }: ProductsProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const [scaleType, setScaleType] =
-    useState<(typeof SCALE_TYPES)[number]>("Retail");
+
+  /* -------------------- DYNAMIC SCALE TYPES -------------------- */
+  const scaleTypes = useMemo(() => {
+    return Array.from(
+      new Set(products.map(p => p.scaleType).filter(Boolean))
+    ).sort();
+  }, [products]);
+
+  const [scaleType, setScaleType] = useState<string | null>(
+    scaleTypes[0] ?? null
+  );
 
   const [sort, setSort] =
     useState<(typeof SORT_OPTIONS)[number]>("Default");
 
-  const [quoteModal, setQuoteModal] = useState<any | null>(null);
+  const [quoteModal, setQuoteModal] = useState<Product | null>(null);
 
   /* -------------------- PAGINATION -------------------- */
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(12);
 
+  /* -------------------- URL → STATE SYNC -------------------- */
   useEffect(() => {
-  const match = pathname.match(/\/Products\/(.+)-scale$/);
-  if (match) {
-    const type = match[1]
-      .replace(/-/g, " ")
-      .replace(/\b\w/g, l => l.toUpperCase());
+    if (!scaleTypes.length) return;
 
-    if (SCALE_TYPES.includes(type as any)) {
-      setScaleType(type as any);
+    const match = pathname.match(/\/Products\/(.+)$/);
+    if (!match) return;
+
+    const typeFromUrl = slugToScaleType(match[1]);
+
+    if (scaleTypes.includes(typeFromUrl)) {
+      setScaleType(typeFromUrl);
+    } else {
+      setScaleType(scaleTypes[0]);
     }
-  }
-}, [pathname]);
-
+  }, [pathname, scaleTypes]);
 
   /* -------------------- FILTER + SORT -------------------- */
   const filteredProducts = useMemo(() => {
-    let items = products.filter(product =>
-      product.scaleType === scaleType
+    if (!scaleType) return [];
+
+    let items = products.filter(
+      product => product.scaleType === scaleType
     );
 
     switch (sort) {
@@ -103,101 +104,73 @@ export default function ProductsPage({ products = [] }: ProductsProps) {
 
   return (
     <main className="w-full bg-neutral-50 min-h-screen">
-      {/* SEO JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Product",
-            name: "Premier Scales Zambia Products",
-            brand: "Premier Scales",
-            category: "Weighing Equipment",
-            url: "https://premierscales.co.zm/products"
-          })
-        }}
-      />
-
       {/* -------------------- FILTER BAR -------------------- */}
-      <section className="w-full bg-white border px-6 md:px-10 ">
-        <div className="max-w-5xl mx-auto sm:px-4 py-3 flex flex-col gap-3 sm:gap-4 md:items-center md:justify-center">
-  
-  {/* Categories */}
- 
+      <section className="w-full bg-white border px-6 md:px-10">
+        <div className="max-w-5xl mx-auto py-3 flex flex-col gap-4 md:items-center">
 
+          {/* Dynamic Scale Types */}
+          <div className="flex flex-wrap">
+            {scaleTypes.map(type => {
+              const active = scaleType === type;
 
+              return (
+                <button
+                  key={type}
+                  onClick={() => {
+                    setScaleType(type);
+                    setPage(1);
 
-<div className="flex flex-wrap">
-  {SCALE_TYPES.map(type => {
-    const active = scaleType === type;
+                    const url = scaleTypeToSlug(type);
+                    if (pathname !== url) {
+                      router.push(url, { scroll: false });
+                    }
+                  }}
+                  className={`
+                    px-4 sm:px-10 py-1.5 sm:py-2
+                    text-[11px] sm:text-sm
+                    font-medium rounded-xs whitespace-nowrap
+                    transition-all
+                    ${active
+                      ? "bg-black text-white shadow-sm"
+                      : "bg-neutral-100 border border-gray-200 text-gray-700 hover:border-black hover:bg-white"}
+                  `}
+                >
+                  {type}
+                </button>
+              );
+            })}
+          </div>
 
-    return (
-      <button
-        key={type}
-        onClick={() => {
-          setScaleType(type);
-          setPage(1);
+          {/* Sort */}
+          <div className="flex flex-wrap items-center gap-1 bg-white border border-gray-200 rounded-xs p-1">
+            {SORT_OPTIONS.map(opt => {
+              const active = sort === opt;
 
-          const url = scaleTypeToSlug(type);
-
-          // prevent unnecessary pushes
-          if (pathname !== url) {
-            router.push(url, { scroll: false });
-          }
-        }}
-        className={`
-          px-4 sm:px-12 py-1.5 sm:py-2
-          text-[11px] sm:text-sm
-          font-medium
-          rounded-xs
-          whitespace-nowrap
-          transition-all
-          ${active
-            ? "bg-black text-white shadow-sm"
-            : "bg-neutral-100 border border-gray-200 text-gray-700 hover:border-black hover:bg-white"}
-        `}
-        aria-pressed={active}
-      >
-        {type}
-      </button>
-    );
-  })}
-</div>
-
-
-  {/* Sort */}
-  <div className="flex flex-wrap items-center gap-1 bg-white border border-gray-200 rounded-xs p-1 self-start md:self-auto">
-    {SORT_OPTIONS.map((opt) => {
-      const active = sort === opt;
-
-      return (
-        <button
-          key={opt}
-          onClick={() => {
-            setSort(opt as any);
-            setPage(1);
-          }}
-          className={`
-            px-2.5 sm:px-3 py-1.5
-            text-[11px] sm:text-sm
-            font-medium
-            rounded-xs
-            whitespace-nowrap
-            transition-all
-            ${active
-              ? "bg-black text-white shadow-sm"
-              : "text-gray-600 hover:text-black hover:bg-gray-50"}
-          `}
-          aria-pressed={active}
-        >
-          {opt}
-        </button>
-      );
-    })}
-  </div>
-
-</div>
-
+              return (
+                <button
+                  aria-label="sort-button"
+                  key={opt}
+                  onClick={() => {
+                    setSort(opt);
+                    setPage(1);
+                  }}
+                  className={`
+                    px-2.5 sm:px-3 py-1.5
+                    text-[11px] sm:text-sm
+                    font-medium rounded-xs whitespace-nowrap
+                    transition-all
+                    ${active
+                      ? "bg-black text-white shadow-sm"
+                      : "text-gray-600 hover:text-black hover:bg-gray-50"}
+                  `}
+                  
+                >
+                  {opt}
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </section>
 
       {/* -------------------- PRODUCTS GRID -------------------- */}
@@ -234,35 +207,11 @@ export default function ProductsPage({ products = [] }: ProductsProps) {
       </div>
 
       {/* -------------------- REQUEST QUOTE MODAL -------------------- */}
-      <Dialog
-        open={!!quoteModal}
-        onClose={() => setQuoteModal(null)}
-        className="relative z-50"
-      >
-        <div className="fixed inset-0 bg-black/50" />
-        <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Dialog.Panel className="bg-white rounded-xl p-6 max-w-md w-full">
-            <Dialog.Title className="text-xl font-bold">
-              Request a Quote
-            </Dialog.Title>
-
-            <p className="mt-2 text-gray-600">
-              We’ll contact you regarding{" "}
-              <strong>{quoteModal?.name}</strong>.
-            </p>
-
-            <form className="mt-4 flex flex-col gap-4">
-              <Input placeholder="Full Name" />
-              <Input type="email" placeholder="Email Address" />
-              <Input type="tel" placeholder="Phone Number" />
-              <Textarea rows={3} placeholder="Additional Notes" />
-              <button className="bg-black text-white py-2 rounded-md">
-                Submit Request
-              </button>
-            </form>
-          </Dialog.Panel>
-        </div>
-      </Dialog>
+     <RequestQuoteModal
+       open={!!quoteModal}
+       product={quoteModal}
+       onClose={() => setQuoteModal(null)}
+      />
     </main>
   );
 }

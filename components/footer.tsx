@@ -155,7 +155,7 @@ export default function Footer() {
 
       {/* Copyright */}
       <div className="border-t text-center text-sm text-gray-500 py-6">
-        &copy; {new Date().getFullYear()} Premier Scales. All rights reserved.
+        &copy; {new Date().getFullYear()} ActsCloud Media. All rights reserved.
       </div>
     </footer>
   );

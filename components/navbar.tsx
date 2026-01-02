@@ -6,7 +6,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSession } from "next-auth/react";
 import { Button } from "./ui/button";
-import { X, Search } from "lucide-react";
+import { X, Search, Loader2 } from "lucide-react";
 import { TbMenu4 } from "react-icons/tb";
 //import SignInButton from "./auth/SignInButton";
 import { toast } from "sonner";
@@ -24,6 +24,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
+  const [onSearch, setOnSearch] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   const navItems = [
@@ -43,7 +44,7 @@ export default function Navbar() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-   /* setOnSearch(true);
+    setOnSearch(true);
 
     if (searchQuery.trim()) {
       router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
@@ -53,7 +54,7 @@ export default function Navbar() {
       setMobileOpen(false);
     }
 
-    setOnSearch(false);*/
+    setOnSearch(false);
   };
 
   const handleMediaClick = () => {
@@ -116,7 +117,7 @@ export default function Navbar() {
                     className="flex-1 px-4 py-1.5 text-sm bg-red-500 text-white placeholder-white focus:ring-2 focus:ring-white focus:outline-none"
                   />
                   <Button type="submit" size="sm" className="bg-red-500 text-white hover:bg-white/90 hover:text-black rounded-none">
-                    Go
+                    {onSearch ? <Loader2 size={18} /> : " Go" }
                   </Button>
                 </motion.form>
               )}
@@ -192,7 +193,7 @@ export default function Navbar() {
               className="flex-1 px-4 py-1 text-sm w-full bg-red-500 text-white placeholder-white focus:ring-2 focus:ring-white focus:outline-none"
             />
             <Button type="submit" size="sm" className="bg-red-500 text-white hover:bg-white hover:text-black rounded-none">
-              Go
+              {onSearch ? <Loader2 size={18} /> : " Go" }
             </Button>
           </motion.form>
         )}
