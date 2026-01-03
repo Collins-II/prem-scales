@@ -1,10 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import { TrendingItem } from "@/app/search/components/IndexSearch";
 import { TopRecordsBoard } from "./analytics/TopRecords";
 
 const CardList = () => {
-    const [trending, setTrending] = useState<TrendingItem[]>([]);
+    const [trending, setTrending] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
      /* 🧠 Fetch trending */
       useEffect(() => {

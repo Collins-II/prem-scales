@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { TrendingItem } from "@/app/search/components/IndexSearch";
 import Image from "next/image";
 import { TrendingUp, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -36,7 +35,7 @@ function TopRecordsLoader() {
 /* ------------------------------------------------------------
    👉 Dynamic HREF Builder
 ------------------------------------------------------------ */
-function getItemHref(item: TrendingItem) {
+function getItemHref(item: any) {
   const model = item.model?.toLowerCase();
 
   if (!model) return "#";
@@ -60,7 +59,7 @@ export function TopRecordsBoard({
   list,
   loading = false,
 }: {
-  list: TrendingItem[];
+  list: any[];
   loading?: boolean;
 }) {
   const showList = !loading && list.length > 0;
