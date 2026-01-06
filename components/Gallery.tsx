@@ -8,12 +8,13 @@ interface GalleryProps {
   initialImage?: string;
   alt?: string;
   fallbackImage?: string;
+  watermarkText?: string;
 }
 
 const DEFAULT_FALLBACK =
   "/images/placeholder-product.png"; // add a local placeholder
 
-export default function Gallery({ images, initialImage, alt, fallbackImage = DEFAULT_FALLBACK }: GalleryProps) {
+export default function Gallery({ images, initialImage, alt, fallbackImage = DEFAULT_FALLBACK, watermarkText = "Premier Scales", }: GalleryProps) {
     const safeImages = images?.length ? images : [fallbackImage];
 
   const [mainImage, setMainImage] = useState(
@@ -114,6 +115,19 @@ export default function Gallery({ images, initialImage, alt, fallbackImage = DEF
               setLoading(false);
             }}
           />
+           {/* ================= WATERMARK OVERLAY ================= */}
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-[0.08]">
+          <div className="rotate-[-30deg] grid grid-cols-2 gap-24 text-gray-900">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <span
+                key={i}
+                className="text-lg font-semibold uppercase tracking-widest whitespace-nowrap"
+              >
+                {watermarkText}
+              </span>
+            ))}
+          </div>
+        </div>
         </div>
       </div>
 

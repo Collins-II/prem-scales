@@ -13,7 +13,7 @@ export default async function IndexProducts({ products }: IndexProps) {
   return (
     <>
 
-     <div className="min-h-screen bg-white pt-14">
+     <div className=" bg-white pt-14">
         <SiteHeader />
 
         <MarketPage products={products as Product[]} />

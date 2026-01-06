@@ -7,7 +7,7 @@ export default async function Services() {
   return (
     <>
 
-      <div className="min-h-screen bg-white pt-14">
+      <div className=" bg-white pt-14">
         <SiteHeader />
 
         <ServicesPage />

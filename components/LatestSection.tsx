@@ -4,20 +4,20 @@ import { MusicCard } from "./music/MusicCard";
 
 import MusicCardSkeleton from "./skeletons/music-card-skeleton";
 import VideoCardSkeleton from "./skeletons/video-card-skeleton";
-import { BANNERS, Product, PRODUCTS } from "@/data/dummy";
+import { BANNERS, Product } from "@/data/dummy";
 import InfiniteSlider from "./sliders/InfiniteSlider";
 import { ProductCard } from "./cards/ProductCard";
 import ThemedHeading from "./themed-heading";
 
 interface SectionProps {
-  products: Product[];
   banners: any[];
+  products: Product[];
 }
 
 export default function LatestSection({ products, banners }: SectionProps ) {
 
   const isLoading = (!BANNERS?.length && !products?.length);
-  const slug = PRODUCTS[0].scaleType;
+  const slug = products[0].scaleType;
 
   return (
     <section className="py-16 bg-white">

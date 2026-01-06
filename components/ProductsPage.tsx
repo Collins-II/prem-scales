@@ -103,7 +103,7 @@ export default function ProductsPage({ products = [] }: ProductsProps) {
   }, [filteredProducts, page, pageSize]);
 
   return (
-    <main className="w-full bg-neutral-50 min-h-screen">
+    <main className="w-full bg-neutral-50">
       {/* -------------------- FILTER BAR -------------------- */}
       <section className="w-full bg-white border px-6 md:px-10">
         <div className="max-w-5xl mx-auto py-3 flex flex-col gap-4 md:items-center">

@@ -3,11 +3,11 @@ import HeroSection from "@/components/hero";
 import Footer from "@/components/footer";
 import LatestSection from "@/components/LatestSection";
 import GroupedProducts from "@/components/GroupedProducts";
-import { getProductsByType } from "@/actions/getProductsByType";
 import { getBanners } from "@/actions/getBanners";
-import NetworkError from "@/components/NetworkError";
 import { getGroupedProducts } from "@/actions/getGroupedProducts";
 import { getHeros } from "@/actions/getHeros";
+import { getProductsByType } from "@/actions/getProductsByType";
+import NetworkError from "@/components/NetworkError";
 
 export default async function Home() {
   const products = await getProductsByType();
@@ -15,9 +15,11 @@ export default async function Home() {
   const heros = await getHeros();
   const groupedProducts = await getGroupedProducts();
 
-  if(!products || !banners) {
-    return <NetworkError message="Network errors.Try again later." />
-  }
+    if (!products || !banners || !heros || !groupedProducts) {
+      return (
+        <NetworkError message="Network Error.Try Again" />
+      )
+    }
 
   return (
     <>

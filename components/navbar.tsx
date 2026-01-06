@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -15,6 +15,7 @@ import NavSidebar from "./sidebar";
 import { Separator } from "./ui/separator";
 import TemplatesDropdown from "./TemplatesDropdown";
 import Image from "next/image";
+import { Category } from "@/data/dummy";
 
 export default function Navbar() {
   const router = useRouter();
@@ -26,17 +27,48 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [onSearch, setOnSearch] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
+
+    useEffect(() => {
+      const controller = new AbortController();
+  
+      const fetchCategories = async () => {
+        try {
+  
+          const res = await fetch("/api/categories", {
+            signal: controller.signal,
+            next: { revalidate: 300 } // ✅ cache-friendly
+          });
+  
+          if (!res.ok) throw new Error("Failed to fetch categories");
+  
+          const data: Category[] = await res.json();
+  
+          setCategories(data);
+        } catch (err: any) {
+          if (err.name !== "AbortError") {
+            console.error("[TEMPLATES_DROPDOWN_FETCH]", err);
+           
+          }
+        }
+      };
+  
+      fetchCategories();
+      return () => controller.abort();
+    }, []);
+
+  const slug = categories && categories[0]?.slug
 
   const navItems = [
-    { label: "Industry Sectors", href: "/Industry-Sectors" },
+    { label: "Industries", href: "/Industries" },
     { label: "Services", href: "/Services" },
     { label: "Why Us", href: "/Why-Us" },
     { label: "Contact Us", href: "/Contact-Us" },
   ];
 
     const navMobileItems = [
-    { label: "Products", href: "/Products" },
-    { label: "Industry Sectors", href: "/Industry-Sectors" },
+    { label: "Products", href: `/Products/${slug? slug : "platform-scale"}` },
+    { label: "Industries", href: "/Industries" },
     { label: "Services", href: "/Services" },
     { label: "Why Us", href: "/Why-Us" },
     { label: "Contact Us", href: "/Contact-Us" },
